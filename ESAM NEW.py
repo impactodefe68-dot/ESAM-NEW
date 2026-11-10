@@ -79,8 +79,8 @@ st.markdown("""
     --primary-dark: #C5222E;
     --primary-tint: rgba(230, 57, 70, 0.12);
     --ok: #2DC653;
-    --ball-accent: #FFB703; /* Acento para balones / deportes */
-    --dollar-accent: #2A9D8F; /* Acento para finanzas / dólares */
+    --ball-accent: #FFB703;
+    --dollar-accent: #2A9D8F;
     --radius: 10px;
     --radius-lg: 16px;
     --shadow: 0 10px 30px rgba(0, 0, 0, 0.8);
@@ -323,10 +323,9 @@ def autenticar_usuario(username, password):
             pass
         cerrar_conexion(conn)
 
-# Pantalla de Login si no está autenticado
 if not st.session_state["autenticado"]:
     st.markdown("<h1 style='text-align: center;'>ESAM Analytics 360°</h1>", unsafe_allow_html=True)
-    st.markdown("<p style='text-align: center;'>Centro Táctico de Análisis y Ofimática</p>", unsafe_allow_html=True)
+    st.markdown("<p style='text-align: center;'>Centro Táctico de Análisis, Balones y Finanzas</p>", unsafe_allow_html=True)
     
     tab_login, tab_info = st.tabs(["🔐 Iniciar Sesión", "ℹ️ Información"])
     with tab_login:
@@ -342,7 +341,7 @@ if not st.session_state["autenticado"]:
                 else:
                     st.error("❌ Usuario o contraseña incorrectos.")
     with tab_info:
-        st.info("💡 Sistema protegido con cifrado PBKDF2-SHA256 y sincronización horaria UTC-4.")
+        st.info("💡 Sistema protegido con cifrado PBKDF2-SHA256, modo táctico negro/rojo y UTC-4.")
     st.stop()
 
 # =========================================================
@@ -394,7 +393,7 @@ with st.sidebar:
     st.markdown(f"🛡️ **Rol:** {st.session_state['rol'].upper()}")
     st.markdown("---")
     st.markdown("### 🔴 Menú Táctico")
-    opcion = st.radio("Módulos:", ["Dashboard Ejecutivo", "Gestión Ofimática y Datos", "Configuración y Seguridad"])
+    opcion = st.radio("Módulos:", ["Dashboard Ejecutivo", "Gestión Ofimática y Datos", "Reportes y Exportación", "Configuración y Seguridad"])
     
     st.markdown("---")
     if st.button("Cerrar Sesión"):
@@ -416,7 +415,7 @@ if opcion == "Dashboard Ejecutivo":
     with col3:
         st.metric(label="Sincronización Horaria", value="UTC-4 (Local)", delta="Estable")
         
-    st.info("💡 Interfaz configurada en modo táctico (Negro y Rojo corporativo) con indicadores dinámicos por tipo de activo.")
+    st.info("💡 Centro Táctico operando con paleta Negro/Rojo de alto rendimiento y segmentación por tipo de activo.")
     
     if not df_regs.empty:
         st.subheader("📋 Historial Reciente de Operaciones")
@@ -426,7 +425,7 @@ if opcion == "Dashboard Ejecutivo":
 
 elif opcion == "Gestión Ofimática y Datos":
     st.subheader("📁 Módulo de Ofimática y Carga de Registros")
-    st.write("Administra, procesa y registra información analítica y financiera de forma segura.")
+    st.write("Administra, procesa y registra información analítica de balones y finanzas de forma segura.")
     
     with st.form("form_ofimatica"):
         st.markdown("#### Nuevo Registro en el Sistema")
@@ -446,6 +445,22 @@ elif opcion == "Gestión Ofimática y Datos":
                 if exito:
                     st.success("✅ ¡Registro almacenado y sincronizado correctamente en la base de datos!")
                     st.rerun()
+
+elif opcion == "Reportes y Exportación":
+    st.subheader("📥 Reportes y Exportación de Datos")
+    st.write("Genera y descarga reportes detallados en formato CSV para respaldos de ofimática.")
+    
+    if not df_regs.empty:
+        csv_data = df_regs.to_csv(index=False).encode('utf-8')
+        st.download_button(
+            label="📥 Descargar Reporte Completo en CSV",
+            data=csv_data,
+            file_name=f"esam_analytics_reporte_{hoy_local()}.csv",
+            mime="text/csv"
+        )
+        st.dataframe(df_regs, use_container_width=True)
+    else:
+        st.info("ℹ️ No hay datos disponibles para exportar en este momento.")
 
 else:
     st.subheader("⚙️ Configuración y Seguridad")
