@@ -73,49 +73,54 @@ st.set_page_config(
 
 st.markdown("""
 <style>
-@import url('https://fonts.googleapis.com/css2?family=Inter:wght@400;500;600;700&family=Plus+Jakarta+Sans:wght@600;700;800&display=swap');
+@import url('https://fonts.googleapis.com/css2?family=Inter:wght@400;500;600;700&family=Inter+Tight:wght@600;700;800&display=swap');
 
 /* ================= TOKENS ================= */
 :root {
-    --bg: #F6F8FC;
+    --bg: #F6F7FA;
     --surface: #FFFFFF;
-    --surface-2: #F1F5F9;
-    --border: #E4EAF3;
-    --border-strong: #D3DDEB;
-    --text: #0F172A;
-    --text-soft: #334155;
-    --muted: #64748B;
-    --accent: #2563EB;
-    --accent-dark: #1D4ED8;
-    --accent-soft: rgba(37, 99, 235, 0.08);
-    --success: #0F9D6E;
-    --r-sm: 8px;
-    --r: 10px;
-    --r-lg: 14px;
-    --shadow-sm: 0 1px 2px rgba(15, 23, 42, 0.05);
-    --shadow: 0 1px 3px rgba(15, 23, 42, 0.06), 0 8px 24px -16px rgba(15, 23, 42, 0.24);
+    --surface-2: #F1F3F8;
+    --line: #E7EAF1;
+    --line-2: #D8DDE8;
+    --ink: #0B1220;
+    --ink-2: #38445C;
+    --muted: #6A768D;
+    --primary: #2345E8;
+    --primary-dark: #1A35BE;
+    --primary-tint: #EDF0FE;
+    --ok: #0E9F6E;
+    --radius: 10px;
+    --radius-lg: 16px;
+    --shadow-xs: 0 1px 2px rgba(11, 18, 32, 0.05);
+    --shadow-sm: 0 1px 2px rgba(11, 18, 32, 0.04), 0 6px 18px -14px rgba(11, 18, 32, 0.28);
+    --shadow-md: 0 2px 4px rgba(11, 18, 32, 0.04), 0 18px 40px -26px rgba(11, 18, 32, 0.45);
 }
 
 *, *::before, *::after { box-sizing: border-box; }
 
 /* ================= BASE ================= */
 html, body, [data-testid='stAppViewContainer'], [data-testid='stApp'] {
-    background-color: var(--bg) !important;
-    color: var(--text) !important;
+    background: var(--bg) !important;
+    background-image:
+        radial-gradient(1000px 420px at 42% -18%, rgba(35, 69, 232, 0.055), transparent 62%),
+        radial-gradient(760px 380px at 92% -12%, rgba(14, 159, 110, 0.05), transparent 60%) !important;
+    background-repeat: no-repeat !important;
+    color: var(--ink) !important;
     font-family: 'Inter', -apple-system, 'Segoe UI', sans-serif !important;
     -webkit-font-smoothing: antialiased;
 }
 [data-testid='stHeader'] {
-    background: rgba(246, 248, 252, 0.85) !important;
-    backdrop-filter: blur(8px);
-    border-bottom: 1px solid transparent !important;
+    background: transparent !important;
+    backdrop-filter: none !important;
+    border: none !important;
 }
-[data-testid='stToolbar'] { right: 1rem !important; }
+[data-testid='stToolbar'], [data-testid='stAppDeployButton'] { display: none !important; }
+#MainMenu, footer, [data-testid='stDecoration'], [data-testid='stStatusWidget'] { display: none !important; }
 
 .block-container, [data-testid='stMainBlockContainer'] {
-    padding-top: 2.4rem !important;
+    padding-top: 2.2rem !important;
     padding-bottom: 4rem !important;
-    max-width: 1320px !important;
+    max-width: 1280px !important;
 }
 
 /* ================= TIPOGRAFÍA ================= */
@@ -125,443 +130,654 @@ html, body, [data-testid='stAppViewContainer'], [data-testid='stApp'] {
 label, input, textarea, button, select {
     font-family: 'Inter', -apple-system, 'Segoe UI', sans-serif !important;
 }
-[data-testid='stMarkdownContainer'] p { color: var(--text-soft); line-height: 1.6; }
+[data-testid='stMarkdownContainer'] p { color: var(--ink-2); font-size: 0.92rem; line-height: 1.6; }
 
+/* Encabezado de página: banda con kicker */
 h1 {
-    font-family: 'Plus Jakarta Sans', 'Inter', sans-serif !important;
-    font-size: clamp(1.7rem, 2.4vw, 2.15rem) !important;
-    font-weight: 800 !important;
-    letter-spacing: -0.021em !important;
-    line-height: 1.2 !important;
-    color: var(--text) !important;
-    padding: 0 0 0.9rem 0 !important;
-    margin: 0 0 1rem 0 !important;
-    border-bottom: 1px solid var(--border) !important;
+    font-family: 'Inter Tight', 'Inter', sans-serif !important;
+    font-size: clamp(1.45rem, 2vw, 1.8rem) !important;
+    font-weight: 700 !important;
+    letter-spacing: -0.025em !important;
+    line-height: 1.25 !important;
+    color: var(--ink) !important;
+    background: linear-gradient(118deg, rgba(35, 69, 232, 0.09) 0%, rgba(35, 69, 232, 0.015) 42%, rgba(14, 159, 110, 0.07) 100%) !important;
+    border: 1px solid var(--line) !important;
+    border-radius: var(--radius-lg) !important;
+    padding: 1.05rem 1.4rem 1.15rem !important;
+    margin: 0 0 1.1rem 0 !important;
 }
-h1 a { display: none !important; }
+h1::before {
+    content: 'ESAM Analytics 360°';
+    display: block;
+    font-family: 'Inter', sans-serif;
+    font-size: 0.68rem;
+    font-weight: 600;
+    letter-spacing: 0.16em;
+    text-transform: uppercase;
+    color: var(--primary);
+    margin-bottom: 0.45rem;
+}
+[data-testid='stHeaderActionElements'] { display: none !important; }
 
 h2 {
-    font-family: 'Plus Jakarta Sans', 'Inter', sans-serif !important;
-    font-size: 1.3rem !important;
+    font-family: 'Inter Tight', 'Inter', sans-serif !important;
+    font-size: 1.18rem !important;
     font-weight: 700 !important;
-    letter-spacing: -0.015em !important;
-    color: var(--text) !important;
-    margin: 1.8rem 0 0.6rem 0 !important;
-    padding-bottom: 0 !important;
+    letter-spacing: -0.02em !important;
+    color: var(--ink) !important;
+    margin: 1.9rem 0 0.6rem 0 !important;
 }
-h2 a { display: none !important; }
-
 h3 {
     font-family: 'Inter', sans-serif !important;
-    font-size: 0.95rem !important;
+    font-size: 0.82rem !important;
     font-weight: 600 !important;
-    letter-spacing: 0 !important;
-    color: var(--text) !important;
-    margin: 1.5rem 0 0.55rem 0 !important;
-    padding: 0 0 0 0.7rem !important;
-    border-left: 3px solid var(--accent) !important;
+    letter-spacing: 0.06em !important;
+    text-transform: uppercase !important;
+    color: var(--muted) !important;
+    margin: 1.6rem 0 0.5rem 0 !important;
+    padding: 0 !important;
+    border: none !important;
     box-shadow: none !important;
-    text-transform: none !important;
 }
-h3 a { display: none !important; }
-
 h4, h5 {
     font-family: 'Inter', sans-serif !important;
-    color: var(--text) !important;
     font-weight: 600 !important;
     letter-spacing: -0.01em !important;
+    color: var(--ink) !important;
 }
-
-[data-testid='stCaptionContainer'] { color: var(--muted) !important; }
-[data-testid='stCaptionContainer'] p { color: var(--muted) !important; font-size: 0.82rem !important; }
-
+[data-testid='stCaptionContainer'] p {
+    color: var(--muted) !important;
+    font-size: 0.8rem !important;
+    letter-spacing: 0.005em;
+}
 hr {
     border: none !important;
     height: 1px !important;
-    background: var(--border) !important;
-    margin: 1.8rem 0 !important;
+    background: var(--line) !important;
+    margin: 1.6rem 0 !important;
 }
-a { color: var(--accent) !important; text-decoration: none; }
+a { color: var(--primary) !important; text-decoration: none; }
 a:hover { text-decoration: underline; }
-strong { color: var(--text); font-weight: 600; }
+strong { color: var(--ink) !important; font-weight: 600; }
 
 /* ================= SIDEBAR ================= */
 [data-testid='stSidebar'] {
     background: var(--surface) !important;
-    border-right: 1px solid var(--border) !important;
+    border-right: 1px solid var(--line) !important;
     box-shadow: none !important;
 }
 [data-testid='stSidebar'] > div { background: transparent !important; }
-[data-testid='stSidebar'] * { color: var(--text-soft); }
+[data-testid='stSidebar'] [data-testid='stSidebarContent'] { padding-top: 1.2rem !important; }
+[data-testid='stSidebar'] hr { margin: 1.1rem 0 !important; }
 [data-testid='stSidebar'] h1,
 [data-testid='stSidebar'] h2,
 [data-testid='stSidebar'] h3 {
-    color: var(--text) !important;
-    -webkit-text-fill-color: var(--text) !important;
+    color: var(--ink) !important;
+    -webkit-text-fill-color: var(--ink) !important;
     border: none !important;
     box-shadow: none !important;
-    padding-left: 0 !important;
-    font-size: 0.95rem !important;
-    margin: 0.6rem 0 !important;
+    padding: 0 !important;
+    margin: 0.4rem 0 !important;
+    font-size: 0.9rem !important;
+    text-transform: none !important;
+    letter-spacing: -0.01em !important;
 }
-[data-testid='stSidebar'] hr { margin: 1rem 0 !important; }
+
+/* Marca y usuario en el sidebar */
+.esam-brand {
+    display: flex;
+    align-items: center;
+    gap: 10px;
+    padding: 2px 0 14px 0;
+}
+.esam-brand-logo {
+    width: 34px;
+    height: 34px;
+    flex: 0 0 34px;
+    border-radius: 10px;
+    background: linear-gradient(140deg, var(--primary) 0%, #5B7BFF 100%);
+    color: #FFFFFF;
+    display: flex;
+    align-items: center;
+    justify-content: center;
+    font-family: 'Inter Tight', sans-serif;
+    font-weight: 800;
+    font-size: 1rem;
+    box-shadow: 0 6px 14px -8px rgba(35, 69, 232, 0.9);
+}
+.esam-brand-name {
+    font-family: 'Inter Tight', sans-serif;
+    font-size: 0.95rem;
+    font-weight: 700;
+    color: var(--ink);
+    letter-spacing: -0.02em;
+    line-height: 1.2;
+}
+.esam-brand-tag {
+    font-size: 0.66rem;
+    font-weight: 600;
+    letter-spacing: 0.12em;
+    text-transform: uppercase;
+    color: var(--muted);
+}
+.esam-user {
+    display: flex;
+    align-items: center;
+    gap: 10px;
+    padding: 10px 12px;
+    border: 1px solid var(--line);
+    border-radius: var(--radius);
+    background: var(--surface-2);
+    margin-bottom: 4px;
+}
+.esam-avatar {
+    width: 30px;
+    height: 30px;
+    flex: 0 0 30px;
+    border-radius: 50%;
+    background: var(--surface);
+    border: 1px solid var(--line-2);
+    color: var(--primary);
+    font-weight: 700;
+    font-size: 0.8rem;
+    display: flex;
+    align-items: center;
+    justify-content: center;
+    text-transform: uppercase;
+}
+.esam-user-name {
+    font-size: 0.85rem;
+    font-weight: 600;
+    color: var(--ink);
+    line-height: 1.25;
+}
+.esam-user-role {
+    font-size: 0.7rem;
+    color: var(--muted);
+    text-transform: capitalize;
+}
+
+/* Navegación lateral (radio como menú) */
+.stRadio [data-testid='stWidgetLabel'] { display: none !important; }
+[data-testid='stSidebar'] [role='radiogroup'] {
+    display: flex;
+    flex-direction: column;
+    gap: 3px;
+    margin-top: 2px;
+}
+[data-testid='stSidebar'] label[data-baseweb='radio'] {
+    margin: 0 !important;
+    padding: 8px 11px !important;
+    border: 1px solid transparent !important;
+    border-radius: 9px !important;
+    background: transparent !important;
+    cursor: pointer;
+    transition: background 0.14s ease, border-color 0.14s ease !important;
+}
+[data-testid='stSidebar'] label[data-baseweb='radio'] > div:first-of-type { display: none !important; }
+[data-testid='stSidebar'] label[data-baseweb='radio']:hover { background: var(--surface-2) !important; }
+[data-testid='stSidebar'] label[data-baseweb='radio']:has(input:checked) {
+    background: var(--primary-tint) !important;
+    border-color: #DDE2FB !important;
+}
+[data-testid='stSidebar'] label[data-baseweb='radio'] p {
+    font-size: 0.855rem !important;
+    font-weight: 500 !important;
+    color: var(--ink-2) !important;
+    margin: 0 !important;
+    line-height: 1.35 !important;
+}
+[data-testid='stSidebar'] label[data-baseweb='radio']:has(input:checked) p {
+    color: var(--primary) !important;
+    font-weight: 600 !important;
+}
 
 /* ================= ETIQUETAS ================= */
 [data-testid='stWidgetLabel'] p,
-.stRadio label p,
 [data-testid='stCheckbox'] label p {
-    font-family: 'Inter', sans-serif !important;
-    font-size: 0.8rem !important;
+    font-size: 0.78rem !important;
     font-weight: 600 !important;
-    letter-spacing: 0 !important;
+    letter-spacing: 0.01em !important;
     text-transform: none !important;
-    color: var(--text-soft) !important;
+    color: var(--ink-2) !important;
     margin-bottom: 0.1rem !important;
 }
 
 /* ================= ENTRADAS ================= */
-.stTextInput input, .stNumberInput input, .stTextArea textarea,
-[data-testid='stDateInput'] input, [data-testid='stTimeInput'] input {
+[data-testid='stTextInputRootElement'],
+[data-testid='stNumberInputContainer'],
+[data-testid='stTextArea'] [data-baseweb='textarea'],
+[data-testid='stDateInput'] [data-baseweb='input'],
+[data-testid='stTimeInput'] [data-baseweb='input'] {
     background: var(--surface) !important;
-    border: 1px solid var(--border-strong) !important;
-    border-radius: var(--r-sm) !important;
-    color: var(--text) !important;
-    font-size: 0.9rem !important;
-    padding: 0.5rem 0.7rem !important;
+    border: 1px solid var(--line-2) !important;
+    border-radius: 9px !important;
+    box-shadow: none !important;
     transition: border-color 0.15s ease, box-shadow 0.15s ease !important;
 }
-.stTextInput input:focus, .stNumberInput input:focus, .stTextArea textarea:focus,
-[data-testid='stDateInput'] input:focus {
-    border-color: var(--accent) !important;
-    box-shadow: 0 0 0 3px var(--accent-soft) !important;
-    outline: none !important;
+[data-baseweb='base-input'] { background: transparent !important; }
+[data-testid='stTextInputRootElement']:focus-within,
+[data-testid='stNumberInputContainer']:focus-within {
+    border-color: var(--primary) !important;
+    box-shadow: 0 0 0 3px rgba(35, 69, 232, 0.13) !important;
 }
-.stTextInput input::placeholder, .stNumberInput input::placeholder,
-.stTextArea textarea::placeholder { color: #94A3B8 !important; }
-
-[data-baseweb='input'], [data-baseweb='base-input'] {
+.stTextInput input, .stNumberInput input, .stTextArea textarea,
+[data-testid='stDateInput'] input, [data-testid='stTimeInput'] input {
     background: transparent !important;
-    border-radius: var(--r-sm) !important;
+    border: none !important;
+    border-radius: 9px !important;
+    color: var(--ink) !important;
+    font-size: 0.9rem !important;
+    padding: 0.5rem 0.7rem !important;
+    box-shadow: none !important;
 }
+.stTextInput input:focus, .stNumberInput input:focus, .stTextArea textarea:focus,
+[data-testid='stDateInput'] input:focus { outline: none !important; box-shadow: none !important; }
+.stTextInput input::placeholder, .stNumberInput input::placeholder,
+.stTextArea textarea::placeholder { color: #9AA4B8 !important; }
+[data-testid='stTextInputRootElement'] > div { background: transparent !important; }
+[data-testid='stTextInputRootElement'] button {
+    background: var(--surface) !important;
+    color: var(--muted) !important;
+    border: none !important;
+    border-left: 1px solid var(--line) !important;
+    border-radius: 0 9px 9px 0 !important;
+}
+[data-testid='stTextInputRootElement'] button:hover { color: var(--ink) !important; }
 
 /* Selects */
 [data-baseweb='select'] > div {
     background: var(--surface) !important;
-    border: 1px solid var(--border-strong) !important;
-    border-radius: var(--r-sm) !important;
-    color: var(--text) !important;
+    border: 1px solid var(--line-2) !important;
+    border-radius: 9px !important;
+    color: var(--ink) !important;
     font-size: 0.9rem !important;
+    min-height: 40px;
     transition: border-color 0.15s ease, box-shadow 0.15s ease !important;
 }
-[data-baseweb='select'] > div:hover { border-color: #B9C7DA !important; }
+[data-baseweb='select'] > div:hover { border-color: #C3CBDA !important; }
 [data-baseweb='select'] > div:focus-within {
-    border-color: var(--accent) !important;
-    box-shadow: 0 0 0 3px var(--accent-soft) !important;
+    border-color: var(--primary) !important;
+    box-shadow: 0 0 0 3px rgba(35, 69, 232, 0.13) !important;
 }
 [data-baseweb='select'] svg { color: var(--muted) !important; }
 
-/* Menús desplegables y calendarios */
+/* Menús y calendario */
 [data-baseweb='popover'] [role='listbox'],
 [data-baseweb='popover'] ul {
     background: var(--surface) !important;
-    border: 1px solid var(--border) !important;
-    border-radius: var(--r) !important;
-    box-shadow: 0 12px 32px -12px rgba(15, 23, 42, 0.28) !important;
-    padding: 4px !important;
+    border: 1px solid var(--line) !important;
+    border-radius: var(--radius) !important;
+    box-shadow: var(--shadow-md) !important;
+    padding: 5px !important;
 }
 [data-baseweb='popover'] li,
 [data-baseweb='menu'] li {
     background: transparent !important;
-    color: var(--text-soft) !important;
-    font-size: 0.88rem !important;
-    border-radius: 6px !important;
+    color: var(--ink-2) !important;
+    font-size: 0.87rem !important;
+    border-radius: 7px !important;
 }
 [data-baseweb='popover'] li:hover,
-[data-baseweb='menu'] li:hover { background: var(--surface-2) !important; color: var(--text) !important; }
-
+[data-baseweb='menu'] li:hover { background: var(--surface-2) !important; color: var(--ink) !important; }
 [data-baseweb='calendar'] {
     background: var(--surface) !important;
-    border: 1px solid var(--border) !important;
-    border-radius: var(--r) !important;
-    color: var(--text) !important;
+    border: 1px solid var(--line) !important;
+    border-radius: var(--radius) !important;
 }
-[data-baseweb='calendar'] * { color: var(--text-soft) !important; }
+[data-baseweb='calendar'] * { color: var(--ink-2) !important; }
 [data-baseweb='calendar'] [aria-selected='true'] {
-    background: var(--accent) !important;
+    background: var(--primary) !important;
     color: #FFFFFF !important;
-    border-radius: 6px !important;
+    border-radius: 7px !important;
 }
 
 /* ================= BOTONES ================= */
 .stButton > button, [data-testid='stFormSubmitButton'] > button {
     width: 100%;
-    background: var(--accent) !important;
+    background: var(--primary) !important;
     color: #FFFFFF !important;
     font-family: 'Inter', sans-serif !important;
     font-weight: 600 !important;
-    font-size: 0.88rem !important;
+    font-size: 0.875rem !important;
     letter-spacing: 0 !important;
     text-transform: none !important;
-    border: 1px solid var(--accent) !important;
-    border-radius: var(--r-sm) !important;
+    border: 1px solid var(--primary) !important;
+    border-radius: 9px !important;
     padding: 0.55rem 1rem !important;
-    box-shadow: var(--shadow-sm) !important;
-    transition: background 0.15s ease, box-shadow 0.15s ease, transform 0.1s ease !important;
+    box-shadow: var(--shadow-xs) !important;
+    transition: background 0.15s ease, box-shadow 0.15s ease, border-color 0.15s ease !important;
 }
 .stButton > button:hover, [data-testid='stFormSubmitButton'] > button:hover {
-    background: var(--accent-dark) !important;
-    border-color: var(--accent-dark) !important;
-    transform: none !important;
-    box-shadow: 0 6px 16px -6px rgba(37, 99, 235, 0.5) !important;
+    background: var(--primary-dark) !important;
+    border-color: var(--primary-dark) !important;
+    box-shadow: 0 8px 20px -12px rgba(35, 69, 232, 0.85) !important;
 }
-.stButton > button:active, [data-testid='stFormSubmitButton'] > button:active {
-    transform: translateY(1px) !important;
-}
-.stButton > button:focus-visible { outline: 2px solid var(--accent) !important; outline-offset: 2px; }
+.stButton > button:active, [data-testid='stFormSubmitButton'] > button:active { transform: translateY(1px) !important; }
+.stButton > button:focus-visible { outline: 2px solid var(--primary) !important; outline-offset: 2px; }
 .stButton > button:disabled, [data-testid='stFormSubmitButton'] > button:disabled {
     background: var(--surface-2) !important;
-    color: #94A3B8 !important;
-    border-color: var(--border) !important;
+    color: #9AA4B8 !important;
+    border-color: var(--line) !important;
     box-shadow: none !important;
     opacity: 1 !important;
 }
+.stButton button p, [data-testid='stFormSubmitButton'] button p {
+    color: #FFFFFF !important;
+    -webkit-text-fill-color: #FFFFFF !important;
+    opacity: 1 !important;
+    font-weight: 600 !important;
+    font-size: 0.875rem !important;
+    letter-spacing: 0 !important;
+    text-transform: none !important;
+    margin: 0 !important;
+}
+.stButton > button:disabled button p,
+.stButton > button:disabled p { color: #9AA4B8 !important; -webkit-text-fill-color: #9AA4B8 !important; }
 
+/* Botón del sidebar: estilo secundario */
+[data-testid='stSidebar'] .stButton > button {
+    background: var(--surface) !important;
+    color: var(--ink-2) !important;
+    border: 1px solid var(--line-2) !important;
+    box-shadow: none !important;
+    font-weight: 500 !important;
+}
+[data-testid='stSidebar'] .stButton > button:hover {
+    background: var(--surface-2) !important;
+    border-color: #C3CBDA !important;
+}
+[data-testid='stSidebar'] .stButton > button p {
+    color: var(--ink-2) !important;
+    -webkit-text-fill-color: var(--ink-2) !important;
+    font-weight: 500 !important;
+}
+
+/* Descargas */
 [data-testid='stDownloadButton'] > button {
     background: var(--surface) !important;
-    color: var(--accent) !important;
+    color: var(--primary) !important;
     font-family: 'Inter', sans-serif !important;
     font-weight: 600 !important;
-    font-size: 0.86rem !important;
-    letter-spacing: 0 !important;
-    border: 1px solid var(--border-strong) !important;
-    border-radius: var(--r-sm) !important;
+    font-size: 0.85rem !important;
+    border: 1px solid var(--line-2) !important;
+    border-radius: 9px !important;
     padding: 0.5rem 1rem !important;
-    box-shadow: var(--shadow-sm) !important;
-    transition: background 0.15s ease, border-color 0.15s ease !important;
+    box-shadow: var(--shadow-xs) !important;
 }
 [data-testid='stDownloadButton'] > button:hover {
-    background: var(--accent-soft) !important;
-    border-color: var(--accent) !important;
-    color: var(--accent-dark) !important;
+    background: var(--primary-tint) !important;
+    border-color: #C9D2FA !important;
+}
+[data-testid='stDownloadButton'] button p {
+    color: inherit !important;
+    -webkit-text-fill-color: inherit !important;
+    font-weight: 600 !important;
 }
 
-/* ================= TARJETAS ================= */
+/* ================= TARJETAS KPI ================= */
 [data-testid='stMetric'] {
     background: var(--surface) !important;
-    border: 1px solid var(--border) !important;
-    border-radius: var(--r-lg) !important;
-    padding: 1rem 1.15rem !important;
+    border: 1px solid var(--line) !important;
+    border-radius: var(--radius-lg) !important;
+    padding: 1.05rem 1.15rem !important;
     box-shadow: var(--shadow-sm) !important;
-    transition: border-color 0.15s ease, box-shadow 0.15s ease !important;
+    min-height: 108px;
+    transition: transform 0.16s ease, box-shadow 0.16s ease, border-color 0.16s ease !important;
 }
 [data-testid='stMetric']:hover {
-    border-color: #CBD8EA !important;
-    box-shadow: var(--shadow) !important;
-    transform: none !important;
+    transform: translateY(-1px);
+    border-color: var(--line-2) !important;
+    box-shadow: var(--shadow-md) !important;
 }
 [data-testid='stMetricLabel'] {
     font-family: 'Inter', sans-serif !important;
-    font-size: 0.72rem !important;
+    font-size: 0.74rem !important;
     font-weight: 600 !important;
-    letter-spacing: 0.06em !important;
-    text-transform: uppercase !important;
+    letter-spacing: 0.02em !important;
+    text-transform: none !important;
     color: var(--muted) !important;
     white-space: normal !important;
+    overflow: visible !important;
 }
-[data-testid='stMetricLabel'] p { color: var(--muted) !important; }
+[data-testid='stMetricLabel'] p {
+    color: var(--muted) !important;
+    font-size: 0.74rem !important;
+    font-weight: 600 !important;
+    letter-spacing: 0.02em !important;
+    white-space: normal !important;
+}
 [data-testid='stMetricValue'] {
-    font-family: 'Plus Jakarta Sans', 'Inter', sans-serif !important;
-    font-size: clamp(1.5rem, 2vw, 1.9rem) !important;
+    font-family: 'Inter Tight', 'Inter', sans-serif !important;
+    font-size: clamp(1.6rem, 2vw, 2rem) !important;
     font-weight: 700 !important;
-    letter-spacing: -0.02em !important;
-    color: var(--text) !important;
-    -webkit-text-fill-color: var(--text) !important;
+    letter-spacing: -0.03em !important;
+    color: var(--ink) !important;
+    -webkit-text-fill-color: var(--ink) !important;
     background: none !important;
-    line-height: 1.2 !important;
+    line-height: 1.15 !important;
+    margin-top: 0.25rem !important;
+    font-feature-settings: 'tnum' 1, 'ss01' 1;
+}
+[data-testid='stMetricDelta'] {
+    font-size: 0.72rem !important;
+    color: var(--muted) !important;
 }
 [data-testid='stMetricDelta'] svg { display: none; }
+[data-testid='stMetricDelta'] p { color: var(--muted) !important; font-size: 0.72rem !important; }
 
 [data-testid='stForm'] {
     background: var(--surface) !important;
-    border: 1px solid var(--border) !important;
-    border-radius: var(--r-lg) !important;
-    padding: 1.35rem 1.4rem !important;
+    border: 1px solid var(--line) !important;
+    border-radius: var(--radius-lg) !important;
+    padding: 1.3rem 1.35rem !important;
     box-shadow: var(--shadow-sm) !important;
 }
 
 [data-testid='stExpander'] {
     background: var(--surface) !important;
-    border: 1px solid var(--border) !important;
-    border-radius: var(--r) !important;
+    border: 1px solid var(--line) !important;
+    border-radius: var(--radius) !important;
     overflow: hidden !important;
-    box-shadow: var(--shadow-sm) !important;
+    box-shadow: var(--shadow-xs) !important;
 }
+[data-testid='stExpander'] details { border: none !important; }
 [data-testid='stExpander'] details summary {
     font-family: 'Inter', sans-serif !important;
     font-weight: 600 !important;
-    font-size: 0.88rem !important;
+    font-size: 0.86rem !important;
     letter-spacing: 0 !important;
-    color: var(--text) !important;
-    padding: 0.25rem 0 !important;
+    color: var(--ink) !important;
+    padding: 0.15rem 0 !important;
 }
-[data-testid='stExpander'] details summary:hover { color: var(--accent) !important; }
-[data-testid='stExpander'] details { border: none !important; }
+[data-testid='stExpander'] details summary:hover { color: var(--primary) !important; }
 
 [data-testid='stPlotlyChart'], [data-testid='stVegaLiteChart'],
 [data-testid='stArrowVegaLiteChart'], [data-testid='stPyplot'] {
     background: var(--surface) !important;
-    border: 1px solid var(--border) !important;
-    border-radius: var(--r-lg) !important;
-    padding: 0.5rem !important;
-    box-shadow: var(--shadow-sm) !important;
+    border: 1px solid var(--line) !important;
+    border-radius: var(--radius-lg) !important;
+    padding: 0.4rem !important;
+    box-shadow: var(--shadow-xs) !important;
 }
 
 /* ================= TABLAS ================= */
 [data-testid='stDataFrame'], [data-testid='stTable'] {
     background: var(--surface) !important;
-    border: 1px solid var(--border) !important;
-    border-radius: var(--r) !important;
+    border: 1px solid var(--line) !important;
+    border-radius: var(--radius) !important;
     overflow: hidden !important;
-    box-shadow: var(--shadow-sm) !important;
+    box-shadow: var(--shadow-xs) !important;
 }
 [data-testid='stDataFrame'] * { font-family: 'Inter', sans-serif !important; }
 
 /* ================= PESTAÑAS ================= */
 .stTabs [data-baseweb='tab-list'] {
-    background: var(--surface-2) !important;
-    border: 1px solid var(--border) !important;
-    border-radius: var(--r) !important;
-    padding: 4px !important;
-    gap: 4px !important;
+    background: transparent !important;
+    border: none !important;
+    border-bottom: 1px solid var(--line) !important;
+    border-radius: 0 !important;
+    padding: 0 !important;
+    gap: 1.6rem !important;
 }
-.stTabs [data-baseweb='tab'] {
+[data-testid='stTab'] {
     background: transparent !important;
     color: var(--muted) !important;
     font-family: 'Inter', sans-serif !important;
     font-weight: 600 !important;
-    font-size: 0.87rem !important;
+    font-size: 0.86rem !important;
     letter-spacing: 0 !important;
-    border-radius: 7px !important;
     border: none !important;
-    padding: 0.42rem 0.95rem !important;
-    transition: color 0.15s ease, background 0.15s ease !important;
+    border-radius: 0 !important;
+    padding: 0.6rem 0.1rem !important;
+    box-shadow: none !important;
+    transition: color 0.14s ease !important;
 }
-.stTabs [data-baseweb='tab']:hover { color: var(--text) !important; background: rgba(255, 255, 255, 0.7) !important; }
-.stTabs [aria-selected='true'] {
-    background: var(--surface) !important;
-    color: var(--text) !important;
-    box-shadow: var(--shadow-sm) !important;
+[data-testid='stTab']:hover { color: var(--ink) !important; background: transparent !important; }
+[data-testid='stTab'][aria-selected='true'] {
+    color: var(--ink) !important;
+    box-shadow: inset 0 -2px 0 0 var(--primary) !important;
 }
+[data-testid='stTab'] p { color: inherit !important; -webkit-text-fill-color: inherit !important; opacity: 1 !important; }
+[data-testid='stTab'][aria-selected='true'] p { color: var(--ink) !important; font-weight: 600 !important; }
 .stTabs [data-baseweb='tab-highlight'], .stTabs [data-baseweb='tab-border'] { display: none !important; }
-.stTabs [data-baseweb='tab'] p { color: inherit !important; opacity: 1 !important; }
 
 /* ================= AVISOS ================= */
 [data-testid='stAlert'] {
-    border-radius: var(--r) !important;
-    border-width: 1px !important;
+    background: var(--surface) !important;
+    border: 1px solid var(--line) !important;
+    border-left: 3px solid var(--primary) !important;
+    border-radius: var(--radius) !important;
     padding: 0.8rem 1rem !important;
+    box-shadow: var(--shadow-xs) !important;
 }
-[data-testid='stAlert'] p { font-size: 0.88rem !important; line-height: 1.5 !important; }
+[data-testid='stAlertContainer'] {
+    background: transparent !important;
+    padding: 0 !important;
+}
+[data-testid='stAlert']:has([data-testid='stAlertContentSuccess']) { border-left-color: var(--ok) !important; }
+[data-testid='stAlert']:has([data-testid='stAlertContentWarning']) { border-left-color: #D97706 !important; }
+[data-testid='stAlert']:has([data-testid='stAlertContentError']) { border-left-color: #DC2626 !important; }
+[data-testid='stAlert'] svg { color: var(--primary) !important; }
+[data-testid='stAlert']:has([data-testid='stAlertContentSuccess']) svg { color: var(--ok) !important; }
+[data-testid='stAlert']:has([data-testid='stAlertContentWarning']) svg { color: #D97706 !important; }
+[data-testid='stAlert']:has([data-testid='stAlertContentError']) svg { color: #DC2626 !important; }
+[data-testid='stAlert'] p { font-size: 0.875rem !important; line-height: 1.55 !important; color: var(--ink-2) !important; }
 
 /* ================= CONTROLES ================= */
-[data-testid='stCheckbox'] label, .stRadio label { color: var(--text-soft) !important; }
-[data-testid='stCheckbox'] [data-baseweb='checkbox'] span { border-color: var(--border-strong) !important; }
-.stRadio [role='radiogroup'] label { color: var(--text-soft) !important; }
-[data-testid='stSlider'] [data-baseweb='slider'] div[role='slider'] { background-color: var(--accent) !important; }
+[data-testid='stCheckbox'] label { color: var(--ink-2) !important; font-size: 0.85rem !important; }
+[data-testid='stCheckbox'] label > span:first-of-type {
+    border-color: var(--line-2) !important;
+    background: var(--surface) !important;
+    border-radius: 5px !important;
+    position: relative !important;
+}
+[data-testid='stCheckbox'] label:has(input:checked) > span:first-of-type::after {
+    content: '';
+    position: absolute;
+    left: 5px;
+    top: 2px;
+    width: 4px;
+    height: 8px;
+    border: solid #FFFFFF;
+    border-width: 0 2px 2px 0;
+    transform: rotate(45deg);
+}
+[data-testid='stCheckbox'] label:has(input:checked) > span:first-of-type {
+    background: var(--primary) !important;
+    border-color: var(--primary) !important;
+}
+[data-testid='stCheckbox'] label:has(input:checked) > span:first-of-type svg { color: #FFFFFF !important; }
+[data-testid='stSlider'] [data-baseweb='slider'] div[role='slider'] { background-color: var(--primary) !important; }
 
 /* ================= SCROLL ================= */
 ::-webkit-scrollbar { width: 10px; height: 10px; }
 ::-webkit-scrollbar-track { background: transparent; }
 ::-webkit-scrollbar-thumb {
-    background: #CDD8E6;
+    background: #CFD6E3;
     border-radius: 8px;
     border: 2px solid var(--bg);
 }
-::-webkit-scrollbar-thumb:hover { background: #B3C2D4; }
-
-/* ================= LIMPIEZA ================= */
-#MainMenu, footer, [data-testid='stDecoration'], [data-testid='stStatusWidget'] { display: none !important; }
+::-webkit-scrollbar-thumb:hover { background: #B6C0D1; }
 
 /* ================= PANTALLA DE ACCESO ================= */
-[data-testid='stMainBlockContainer']:has(h1[style*='text-align: center']) {
-    padding-top: 5rem !important;
-}
-[data-testid='stMainBlockContainer']:has(h1[style*='text-align: center']) h1 {
+.esam-login {
+    max-width: 460px;
+    margin: 3.2rem auto 0.4rem;
     text-align: center;
-    font-size: clamp(1.9rem, 3vw, 2.5rem) !important;
-    letter-spacing: -0.025em !important;
-    border-bottom: none !important;
-    margin-bottom: 0.25rem !important;
-    padding-bottom: 0 !important;
 }
-[data-testid='stMainBlockContainer']:has(h1[style*='text-align: center']) [data-testid='stMarkdownContainer'] p {
-    text-align: center !important;
-    text-transform: none !important;
-    letter-spacing: 0 !important;
-    font-size: 0.95rem !important;
+.esam-login-logo {
+    width: 52px;
+    height: 52px;
+    margin: 0 auto 16px;
+    border-radius: 14px;
+    background: linear-gradient(140deg, var(--primary) 0%, #6B84FF 100%);
+    color: #FFFFFF;
+    font-family: 'Inter Tight', sans-serif;
+    font-weight: 800;
+    font-size: 1.35rem;
+    display: flex;
+    align-items: center;
+    justify-content: center;
+    box-shadow: 0 16px 34px -18px rgba(35, 69, 232, 0.95);
+}
+.esam-login h1 {
+    background: none !important;
+    border: none !important;
+    padding: 0 !important;
+    margin: 0 0 6px 0 !important;
+    font-family: 'Inter Tight', sans-serif !important;
+    font-size: 1.65rem !important;
+    font-weight: 800 !important;
+    letter-spacing: -0.02em !important;
+    word-spacing: 0.04em;
+    color: var(--ink) !important;
+    text-align: center;
+}
+.esam-login h1::before { display: none !important; }
+.esam-login p {
     color: var(--muted) !important;
-    margin-bottom: 1.8rem !important;
+    font-size: 0.88rem !important;
+    margin: 0 !important;
+    text-align: center;
 }
-[data-testid='stMainBlockContainer']:has(h1[style*='text-align: center']) [data-testid='stTabs'] {
+
+[data-testid='stMainBlockContainer']:has(.esam-login) [data-testid='stTabs'] {
+    max-width: 460px !important;
+    margin: 0.6rem auto 0 !important;
     background: var(--surface) !important;
-    border: 1px solid var(--border) !important;
-    border-radius: 18px !important;
-    padding: 1.15rem 1.25rem 1.5rem !important;
-    max-width: 520px !important;
-    margin: 0 auto !important;
-    box-shadow: 0 24px 60px -32px rgba(15, 23, 42, 0.35), var(--shadow-sm) !important;
-    backdrop-filter: none !important;
+    border: 1px solid var(--line) !important;
+    border-radius: var(--radius-lg) !important;
+    padding: 0.4rem 1.4rem 1.4rem !important;
+    box-shadow: var(--shadow-md) !important;
 }
-[data-testid='stMainBlockContainer']:has(h1[style*='text-align: center']) [data-testid='stForm'] {
+[data-testid='stMainBlockContainer']:has(.esam-login) .stTabs [data-baseweb='tab-list'] {
+    justify-content: center !important;
+}
+[data-testid='stMainBlockContainer']:has(.esam-login) [data-testid='stForm'] {
+    background: transparent !important;
     border: none !important;
     box-shadow: none !important;
-    padding: 0.35rem 0 0 !important;
-    background: transparent !important;
+    padding: 0.2rem 0 0 !important;
 }
-[data-testid='stMainBlockContainer']:has(h1[style*='text-align: center']) [data-testid='stAlert'] p {
-    text-align: left !important;
-    text-transform: none !important;
-    letter-spacing: 0 !important;
-    font-size: 0.88rem !important;
-    color: inherit !important;
-    margin-bottom: 0 !important;
-}
-[data-testid='stMainBlockContainer']:has(h1[style*='text-align: center']) h3 {
-    border-left: none !important;
-    padding-left: 0 !important;
+[data-testid='stMainBlockContainer']:has(.esam-login) h3 {
     text-align: center !important;
-    font-size: 0.95rem !important;
-    color: var(--muted) !important;
-    margin-top: 0.2rem !important;
+    margin-top: 0.6rem !important;
 }
-
-/* Texto legible sobre botones */
-.stButton button p,
-[data-testid='stFormSubmitButton'] button p {
-    color: #FFFFFF !important;
-    opacity: 1 !important;
-    font-weight: 600 !important;
-    letter-spacing: 0 !important;
-    text-transform: none !important;
-    font-size: 0.88rem !important;
-}
-[data-testid='stDownloadButton'] button p {
-    color: inherit !important;
-    opacity: 1 !important;
-    font-weight: 600 !important;
-}
-.stTabs [aria-selected='true'] p { color: var(--text) !important; opacity: 1 !important; }
 
 /* ================= RESPONSIVE ================= */
+@media (max-width: 1100px) {
+    [data-testid='stMetric'] { min-height: 0; }
+}
 @media (max-width: 900px) {
     .block-container, [data-testid='stMainBlockContainer'] {
         padding-left: 1rem !important;
         padding-right: 1rem !important;
-        padding-top: 1.5rem !important;
+        padding-top: 1.4rem !important;
     }
-    h1 { font-size: 1.5rem !important; }
-    [data-testid='stMetric'] { padding: 0.8rem 0.9rem !important; }
-    [data-testid='stMainBlockContainer']:has(h1[style*='text-align: center']) { padding-top: 2.5rem !important; }
+    h1 { font-size: 1.25rem !important; padding: 0.9rem 1rem 1rem !important; }
+    [data-testid='stMetric'] { padding: 0.85rem 0.95rem !important; }
+    .esam-login { margin-top: 1.6rem; }
 }
 </style>
 """, unsafe_allow_html=True)
@@ -1159,10 +1375,18 @@ if "user_info" not in st.session_state:
     st.session_state.user_info = None
 
 if not st.session_state.authenticated:
-    st.markdown("<h1 style='text-align: center; color: #0F172A;'>💻 ESAM ANALYTICS 360°</h1>", unsafe_allow_html=True)
-    st.markdown("<p style='text-align: center; color: #64748B;'>Plataforma Profesional de Estadísticas y Control Operativo</p>", unsafe_allow_html=True)
+    st.markdown(
+        """
+        <div class="esam-login">
+            <div class="esam-login-logo">E</div>
+            <h1>ESAM Analytics 360°</h1>
+            <p>Plataforma de estadísticas y control operativo</p>
+        </div>
+        """,
+        unsafe_allow_html=True,
+    )
 
-    tab_login, tab_registro = st.tabs(["🔑 Iniciar Sesión", "📝 Registrar Usuario"])
+    tab_login, tab_registro = st.tabs(["Iniciar Sesión", "Registrar Usuario"])
 
     with tab_login:
         st.subheader("Ingreso de Operadores")
@@ -1216,14 +1440,26 @@ else:
 
     es_admin_estricto = (username_actual == "admin")
 
-    st.sidebar.markdown("""
-        <div style='text-align: left; padding: 2px 0 12px 0;'>
-            <h2 style='color: #0F172A; margin: 0 0 3px 0; font-family: "Plus Jakarta Sans", Inter, sans-serif; font-size: 1.02rem; font-weight: 700; letter-spacing: -0.015em;'>💻 ESAM Analytics</h2>
-            <p style='color: #64748B; font-size: 0.68rem; letter-spacing: 0.1em; text-transform: uppercase; font-weight: 600; margin: 0;'>360° Stats Pro</p>
+    inicial_usuario = (user_name or "U").strip()[:1]
+    st.sidebar.markdown(
+        f"""
+        <div class="esam-brand">
+            <div class="esam-brand-logo">E</div>
+            <div>
+                <div class="esam-brand-name">ESAM Analytics</div>
+                <div class="esam-brand-tag">360° Stats Pro</div>
+            </div>
         </div>
-    """, unsafe_allow_html=True)
-    
-    st.sidebar.write(f"👤 **Analista:** {user_name}")
+        <div class="esam-user">
+            <div class="esam-avatar">{inicial_usuario}</div>
+            <div>
+                <div class="esam-user-name">{user_name}</div>
+                <div class="esam-user-role">{rol_actual}</div>
+            </div>
+        </div>
+        """,
+        unsafe_allow_html=True,
+    )
     
     opciones_menu_list = [
         "📊 Panel General y Estadísticas",
@@ -1255,7 +1491,7 @@ else:
     # MÓDULO: PANTALLA PRINCIPAL
     # =========================================================
     if opcion_menu == "📊 Panel General y Estadísticas":
-        st.title("📊 Panel General y Análisis Estadístico 360°")
+        st.title("Panel General y Análisis Estadístico 360°")
         
         target_user_id = user_id
         opcion_label = f"mis datos ({user_name})"
@@ -1335,11 +1571,11 @@ else:
 
         # TARJETAS PRINCIPALES
         col_mg1, col_mg2, col_mg3, col_mg4, col_mg5 = st.columns(5)
-        col_mg1.metric("💰 Total Acumulado", f"${total_ganancias_general:,.2f}", "📈 Rendimiento Alza")
-        col_mg2.metric("🏀 Básquetbol Total", f"${total_g_basket:,.2f}", f"🔺 {total_juegos_b} partidos")
-        col_mg3.metric("⚾ Béisbol Total", f"${total_g_beisbol:,.2f}", f"🔺 {total_pich_b:,} picheos")
-        col_mg4.metric("📊 Cargas Totales", f"{total_registros_brutos} ops", "🟢 Sistema Óptimo")
-        col_mg5.metric("⏱️ Tiempo Promedio", formatear_segundos(tiempo_promedio_seg), f"⏱️ {juegos_con_tiempo} partidos con tiempo")
+        col_mg1.metric("Total acumulado", f"${total_ganancias_general:,.2f}")
+        col_mg2.metric("Básquetbol", f"${total_g_basket:,.2f}")
+        col_mg3.metric("Béisbol", f"${total_g_beisbol:,.2f}")
+        col_mg4.metric("Cargas registradas", f"{total_registros_brutos}")
+        col_mg5.metric("Tiempo promedio", formatear_segundos(tiempo_promedio_seg))
 
         st.markdown("---")
         
@@ -1569,7 +1805,7 @@ else:
     # MÓDULO 1: BÁSQUETBOL (RECÁLCULO RETROACTIVO GARANTIZADO)
     # =========================================================
     elif opcion_menu == "🏀 Módulo Básquetbol":
-        st.title("🏀 ESAM Analytics — Módulo Básquetbol")
+        st.title("Módulo Básquetbol")
         
         target_b_user_id = user_id
         if es_admin:
@@ -1775,7 +2011,7 @@ else:
     # MÓDULO 2: BÉISBOL
     # =========================================================
     elif opcion_menu == "⚾ Módulo Béisbol":
-        st.title("⚾ ESAM Analytics — Módulo Béisbol")
+        st.title("Módulo Béisbol")
 
         target_beis_user_id = user_id
         if es_admin:
@@ -1918,7 +2154,7 @@ else:
     # MÓDULO: ADMINISTRACIÓN DE PRECIOS POR DEPORTE (EXCLUSIVO ADMIN)
     # =========================================================
     elif opcion_menu == "⚙️ Administración de Precios por Deporte" and es_admin_estricto:
-        st.title("⚙️ PANEL DE CONTROL Y CONFIGURACIÓN DE TARIFAS")
+        st.title("Panel de control y configuración de tarifas")
         st.caption("Ajusta en tiempo real los valores en USD asignados a cada disciplina deportiva")
 
         tasas_actuales = obtener_tasas_globales()
@@ -1969,7 +2205,7 @@ else:
     # MÓDULO: SEGURIDAD Y CREDENCIALES (INTELIGENTE)
     # =========================================================
     elif opcion_menu == "🔐 Seguridad y Contraseñas":
-        st.title("🔐 Gestión de Seguridad y Contraseñas")
+        st.title("Gestión de seguridad y contraseñas")
 
         if es_admin:
             st.caption("👑 MODO ADMINISTRADOR: Puedes cambiar la contraseña de cualquier operador sin saber la clave anterior.")
