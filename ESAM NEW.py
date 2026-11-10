@@ -793,6 +793,189 @@ h3 {
     }
 }
 
+
+/* =========================================================
+   ESAM ANALYTICS 360° — TEMA OSCURO
+   Fondo negro/grafito y superficies oscuras.
+   ========================================================= */
+:root {
+    --bg: #080B12;
+    --surface: #111722;
+    --surface-2: #171F2D;
+    --border: #263247;
+    --border-strong: #35445D;
+    --text: #F1F5FC;
+    --text-soft: #C2CCDC;
+    --muted: #91A0B7;
+    --accent: #5B83FF;
+    --accent-dark: #3F66E8;
+    --accent-soft: rgba(91, 131, 255, 0.16);
+    --shadow-sm: 0 3px 12px rgba(0, 0, 0, 0.22);
+    --shadow: 0 12px 30px rgba(0, 0, 0, 0.30);
+}
+
+html, body,
+[data-testid='stApp'],
+[data-testid='stAppViewContainer'],
+[data-testid='stMain'],
+[data-testid='stMainBlockContainer'] {
+    background: #080B12 !important;
+    color: #F1F5FC !important;
+}
+[data-testid='stAppViewContainer'] {
+    background:
+        radial-gradient(ellipse at 12% 0%, rgba(65, 99, 190, .13), transparent 38%),
+        #080B12 !important;
+}
+.block-container, [data-testid='stMainBlockContainer'] {
+    color: #F1F5FC !important;
+}
+
+/* Texto general */
+.stMarkdown, .stText, p, li, label,
+[data-testid='stWidgetLabel'],
+[data-testid='stMarkdownContainer'] {
+    color: #DCE5F3;
+}
+h1, h2, h3, h4, h5, h6 {
+    color: #F7F9FD !important;
+    -webkit-text-fill-color: #F7F9FD !important;
+    border-color: #263247 !important;
+}
+small, [data-testid='stCaptionContainer'] {
+    color: #91A0B7 !important;
+}
+
+/* Cabecera y navegación */
+[data-testid='stHeader'] {
+    background: rgba(8, 11, 18, .92) !important;
+    border-bottom: 1px solid #202B3D !important;
+}
+[data-testid='stSidebar'] {
+    background: linear-gradient(180deg, #070A11 0%, #10192A 100%) !important;
+    border-right: 1px solid #263247 !important;
+}
+[data-testid='stSidebar'] > div {
+    background: transparent !important;
+}
+
+/* Tarjetas, formularios, expanders y contenedores */
+[data-testid='stMetric'],
+[data-testid='stForm'],
+[data-testid='stExpander'],
+[data-testid='stPlotlyChart'],
+[data-testid='stVegaLiteChart'],
+[data-testid='stArrowVegaLiteChart'],
+[data-testid='stPyplot'],
+[data-testid='stDataFrame'],
+[data-testid='stTable'],
+div[data-testid='stVerticalBlockBorderWrapper'] {
+    background: #111722 !important;
+    color: #F1F5FC !important;
+    border-color: #263247 !important;
+    box-shadow: 0 5px 18px rgba(0,0,0,.22) !important;
+}
+[data-testid='stMetric'] {
+    background: linear-gradient(145deg, #151E2C 0%, #101722 100%) !important;
+}
+[data-testid='stMetricLabel'],
+[data-testid='stMetricValue'],
+[data-testid='stMetricDelta'] {
+    color: #F1F5FC !important;
+}
+[data-testid='stExpander'] details,
+[data-testid='stExpander'] summary {
+    background: #111722 !important;
+    color: #E8EEF8 !important;
+}
+
+/* Campos de entrada */
+.stTextInput input, .stNumberInput input, .stTextArea textarea,
+[data-testid='stDateInput'] input, [data-testid='stTimeInput'] input,
+[data-baseweb='select'] > div,
+[data-baseweb='input'] > div {
+    background: #171F2D !important;
+    color: #F1F5FC !important;
+    border-color: #35445D !important;
+    caret-color: #8EAAFF !important;
+}
+input, textarea {
+    color: #F1F5FC !important;
+}
+input::placeholder, textarea::placeholder {
+    color: #8796AD !important;
+    opacity: 1 !important;
+}
+[data-baseweb='select'] *,
+[data-baseweb='popover'] *,
+[role='listbox'] *,
+[role='option'] {
+    color: #EAF0FA !important;
+}
+[data-baseweb='popover'],
+[role='listbox'] {
+    background: #171F2D !important;
+    border: 1px solid #35445D !important;
+}
+[data-baseweb='select'] svg {
+    fill: #C2CCDC !important;
+}
+
+/* Botones */
+.stButton > button,
+[data-testid='stFormSubmitButton'] > button,
+[data-testid='stDownloadButton'] > button {
+    color: #FFFFFF !important;
+}
+.stButton > button[kind='secondary'],
+button[kind='secondary'] {
+    background: #1B2638 !important;
+    border-color: #35445D !important;
+}
+
+/* Pestañas */
+.stTabs [data-baseweb='tab-list'] {
+    background: #111722 !important;
+    border: 1px solid #263247 !important;
+}
+.stTabs [data-baseweb='tab'] {
+    color: #B9C6DA !important;
+}
+.stTabs [aria-selected='true'] {
+    background: #263653 !important;
+    color: #FFFFFF !important;
+}
+
+/* Tablas */
+[data-testid='stDataFrame'] *,
+[data-testid='stTable'] * {
+    color: #E5ECF7 !important;
+}
+[data-testid='stDataFrame'] [role='grid'],
+[data-testid='stDataFrame'] [role='row'],
+[data-testid='stDataFrame'] [role='columnheader'] {
+    background: #111722 !important;
+}
+
+/* Alertas */
+[data-testid='stAlert'] {
+    background: #151F30 !important;
+    border-color: #35445D !important;
+    color: #EAF0FA !important;
+}
+hr {
+    border-color: #263247 !important;
+}
+
+/* Barra de desplazamiento */
+::-webkit-scrollbar-track {
+    background: #080B12 !important;
+}
+::-webkit-scrollbar-thumb {
+    background: #35445D !important;
+    border: 2px solid #080B12 !important;
+}
+
 </style>
 """, unsafe_allow_html=True)
 
