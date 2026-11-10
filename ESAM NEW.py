@@ -1245,6 +1245,13 @@ def obtener_tasas_globales():
 
 
 def actualizar_tasa_global(clave, nuevo_valor):
+    """Solo la cuenta administradora puede modificar las tarifas globales."""
+    info_sesion = st.session_state.get("user_info") or {}
+    usuario_sesion = str(info_sesion.get("username", "")).lower().strip()
+    if not st.session_state.get("authenticated", False) or usuario_sesion != "admin":
+        st.error("⛔ No tienes permisos para modificar los montos. Solo el administrador puede hacerlo.")
+        return False
+
     conn = get_db_connection()
     if conn:
         cur = None
@@ -2071,7 +2078,7 @@ else:
         if conn_q:
             if target_b_user_id == 0:
                 df_basket = pd.read_sql_query("""
-                    SELECT p.id, u.nombre as operador, p.codigo_partido, p.fecha, p.tiempo_ejecucion, p.tarifa, p.tipo_partido 
+                    SELECT p.id, p.usuario_id, u.nombre as operador, p.codigo_partido, p.fecha, p.tiempo_ejecucion, p.tarifa, p.tipo_partido 
                     FROM partidos p
                     JOIN usuarios u ON p.usuario_id = u.id
                     WHERE p.fecha BETWEEN %s AND %s
@@ -2079,7 +2086,7 @@ else:
                 """, conn_q, params=(f_ini, f_fin))
             else:
                 df_basket = pd.read_sql_query("""
-                    SELECT id, codigo_partido, fecha, tiempo_ejecucion, tarifa, tipo_partido 
+                    SELECT id, usuario_id, codigo_partido, fecha, tiempo_ejecucion, tarifa, tipo_partido 
                     FROM partidos 
                     WHERE usuario_id = %s AND fecha BETWEEN %s AND %s
                     ORDER BY fecha DESC, id DESC;
@@ -2096,7 +2103,8 @@ else:
             col_k2.metric("💵 Total Ganancias Quincena", f"${total_ganancias:.2f}", "🔺 En Alza")
             col_k3.metric("📅 Rango Evaluado", f"{f_ini.strftime('%d/%m')} - {f_fin.strftime('%d/%m/%Y')}")
 
-            st.dataframe(df_basket, use_container_width=True, hide_index=True)
+            columnas_basket_visibles = [c for c in df_basket.columns if c != "usuario_id"]
+            st.dataframe(df_basket[columnas_basket_visibles], use_container_width=True, hide_index=True)
 
             with st.expander("🛠️ Modificar, Corregir o Eliminar Cargas de Básquetbol"):
                 tab_eb1, tab_eb2 = st.tabs(["✏️ Modificar / Corregir Partido", "🗑️ Eliminar Partido"])
@@ -2110,7 +2118,12 @@ else:
                         fe_b = st.date_input("Fecha", value=pd.to_datetime(row_b["fecha"]).date())
                         cod_b = st.text_input("Código de Partido", value=str(row_b["codigo_partido"]))
                         t_b = st.text_input("Tiempo de Ejecución", value=str(row_b["tiempo_ejecucion"]))
-                        tar_b = st.number_input("Tarifa ($)", value=float(row_b["tarifa"]), step=0.50)
+                        propietario_b = int(row_b["usuario_id"])
+                        if es_admin_estricto:
+                            tar_b = st.number_input("Tarifa ($) — solo administrador", value=float(row_b["tarifa"]), step=0.50)
+                        else:
+                            tar_b = float(row_b["tarifa"])
+                            st.caption(f"💵 Monto asignado: ${tar_b:.2f}. Solo el administrador puede modificarlo.")
                         
                         if st.form_submit_button("💾 Guardar Correcciones"):
                             t_b_limpio = (t_b or "").strip()
@@ -2124,7 +2137,18 @@ else:
                                     cur_eb = None
                                     try:
                                         cur_eb = conn_eb.cursor()
-                                        cur_eb.execute("UPDATE partidos SET fecha=%s, codigo_partido=%s, tiempo_ejecucion=%s, tarifa=%s WHERE id=%s;", (fe_b, cod_b, tiempo_edit, tar_b, id_edit_b))
+                                        if es_admin_estricto:
+                                            cur_eb.execute(
+                                                "UPDATE partidos SET fecha=%s, codigo_partido=%s, tiempo_ejecucion=%s, tarifa=%s WHERE id=%s AND usuario_id=%s;",
+                                                (fe_b, cod_b, tiempo_edit, tar_b, id_edit_b, propietario_b)
+                                            )
+                                        else:
+                                            cur_eb.execute(
+                                                "UPDATE partidos SET fecha=%s, codigo_partido=%s, tiempo_ejecucion=%s WHERE id=%s AND usuario_id=%s;",
+                                                (fe_b, cod_b, tiempo_edit, id_edit_b, user_id)
+                                            )
+                                        if cur_eb.rowcount != 1:
+                                            raise PermissionError("No tienes permiso para modificar este registro.")
                                         conn_eb.commit()
                                     except Exception as e:
                                         conn_eb.rollback()
@@ -2136,7 +2160,7 @@ else:
                                             pass
                                         cerrar_conexion(conn_eb)
 
-                                    recalcular_tarifas_quincena_basket(user_id, fe_b)
+                                    recalcular_tarifas_quincena_basket(propietario_b, fe_b)
                                     olvidar_recalculos()
                                     st.cache_data.clear()
                                     st.success("✅ Partido modificado y quincena recalculada con éxito.")
@@ -2152,11 +2176,23 @@ else:
                             fecha_borrada = hoy_local()
                             try:
                                 cur_db = conn_db.cursor()
-                                cur_db.execute("SELECT fecha FROM partidos WHERE id = %s;", (id_del_b,))
+                                fila_borrar = df_basket[df_basket["id"] == id_del_b].iloc[0]
+                                propietario_borrar = int(fila_borrar["usuario_id"])
+                                cur_db.execute(
+                                    "SELECT fecha FROM partidos WHERE id = %s AND usuario_id = %s;",
+                                    (id_del_b, propietario_borrar)
+                                )
                                 r_f = cur_db.fetchone()
-                                fecha_borrada = r_f[0] if r_f else hoy_local()
+                                if not r_f:
+                                    raise PermissionError("No tienes permiso para eliminar este registro.")
+                                fecha_borrada = r_f[0]
 
-                                cur_db.execute("DELETE FROM partidos WHERE id = %s;", (id_del_b,))
+                                cur_db.execute(
+                                    "DELETE FROM partidos WHERE id = %s AND usuario_id = %s;",
+                                    (id_del_b, propietario_borrar)
+                                )
+                                if cur_db.rowcount != 1:
+                                    raise PermissionError("No tienes permiso para eliminar este registro.")
                                 conn_db.commit()
                             except Exception as e:
                                 conn_db.rollback()
@@ -2168,7 +2204,7 @@ else:
                                     pass
                                 cerrar_conexion(conn_db)
 
-                            recalcular_tarifas_quincena_basket(user_id, fecha_borrada)
+                            recalcular_tarifas_quincena_basket(propietario_borrar, fecha_borrada)
                             olvidar_recalculos()
                             st.cache_data.clear()
                             st.success("🗑️ Partido eliminado correctamente.")
@@ -2238,7 +2274,7 @@ else:
         if conn_pb:
             if target_beis_user_id == 0:
                 df_picheos = pd.read_sql_query("""
-                    SELECT pi.id, u.nombre as operador, pi.fecha, pi.id_control, pi.cantidad 
+                    SELECT pi.id, pi.usuario_id, u.nombre as operador, pi.fecha, pi.id_control, pi.cantidad 
                     FROM picheos pi
                     JOIN usuarios u ON pi.usuario_id = u.id
                     WHERE pi.fecha BETWEEN %s AND %s
@@ -2246,7 +2282,7 @@ else:
                 """, conn_pb, params=(f_ini, f_fin))
             else:
                 df_picheos = pd.read_sql_query("""
-                    SELECT id, fecha, id_control, cantidad 
+                    SELECT id, usuario_id, fecha, id_control, cantidad 
                     FROM picheos 
                     WHERE usuario_id = %s AND fecha BETWEEN %s AND %s
                     ORDER BY fecha DESC, id DESC;
@@ -2266,7 +2302,8 @@ else:
             cp2.metric("💵 USD Estimado", f"${total_dolares:,.2f}", f"@ ${precio_u}/u")
             cp3.metric("📅 Lotes Registrados", len(df_picheos), "🟢 Estable")
 
-            st.dataframe(df_picheos, use_container_width=True, hide_index=True)
+            columnas_picheos_visibles = [c for c in df_picheos.columns if c != "usuario_id"]
+            st.dataframe(df_picheos[columnas_picheos_visibles], use_container_width=True, hide_index=True)
 
             with st.expander("🛠️ Modificar, Corregir o Eliminar Lotes de Picheos"):
                 tab_ep1, tab_ep2 = st.tabs(["✏️ Modificar / Corregir Lote", "🗑️ Eliminar Lote"])
@@ -2276,6 +2313,7 @@ else:
                     id_edit_p = st.selectbox("Seleccione el ID del lote a corregir:", list_ids_p, key="sel_edit_p")
                     
                     row_p = df_picheos[df_picheos["id"] == id_edit_p].iloc[0]
+                    propietario_p = int(row_p["usuario_id"])
                     with st.form("form_edit_p"):
                         fe_p = st.date_input("Fecha", value=pd.to_datetime(row_p["fecha"]).date())
                         id_c_p = st.text_input("ID Control / Partido", value=str(row_p["id_control"]))
@@ -2285,7 +2323,12 @@ else:
                             conn_ep = get_db_connection()
                             if conn_ep:
                                 cur_ep = conn_ep.cursor()
-                                cur_ep.execute("UPDATE picheos SET fecha=%s, id_control=%s, cantidad=%s WHERE id=%s;", (fe_p, id_c_p, int(cant_p), id_edit_p))
+                                cur_ep.execute(
+                                    "UPDATE picheos SET fecha=%s, id_control=%s, cantidad=%s WHERE id=%s AND usuario_id=%s;",
+                                    (fe_p, id_c_p, int(cant_p), id_edit_p, propietario_p)
+                                )
+                                if cur_ep.rowcount != 1:
+                                    raise PermissionError("No tienes permiso para modificar este lote.")
                                 conn_ep.commit()
                                 cur_ep.close()
                                 conn_ep.close()
@@ -2302,7 +2345,14 @@ else:
                             cur_dp = None
                             try:
                                 cur_dp = conn_dp.cursor()
-                                cur_dp.execute("DELETE FROM picheos WHERE id = %s;", (id_del_p,))
+                                fila_p_borrar = df_picheos[df_picheos["id"] == id_del_p].iloc[0]
+                                propietario_p_borrar = int(fila_p_borrar["usuario_id"])
+                                cur_dp.execute(
+                                    "DELETE FROM picheos WHERE id = %s AND usuario_id = %s;",
+                                    (id_del_p, propietario_p_borrar)
+                                )
+                                if cur_dp.rowcount != 1:
+                                    raise PermissionError("No tienes permiso para eliminar este lote.")
                                 conn_dp.commit()
                                 st.cache_data.clear()
                                 st.success("🗑️ Lote de picheos eliminado correctamente.")
