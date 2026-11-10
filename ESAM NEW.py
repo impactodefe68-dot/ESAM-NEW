@@ -563,6 +563,236 @@ strong { color: var(--text); font-weight: 600; }
     [data-testid='stMetric'] { padding: 0.8rem 0.9rem !important; }
     [data-testid='stMainBlockContainer']:has(h1[style*='text-align: center']) { padding-top: 2.5rem !important; }
 }
+
+/* =========================================================
+   ESAM ANALYTICS 360° — ACTUALIZACIÓN VISUAL
+   Cambios exclusivamente CSS: no modifica la lógica del sistema.
+   ========================================================= */
+:root {
+    --bg: #F3F6FB;
+    --surface: #FFFFFF;
+    --surface-2: #F5F8FD;
+    --border: #E3EAF4;
+    --border-strong: #CBD6E5;
+    --text: #101B33;
+    --text-soft: #40516D;
+    --muted: #74839B;
+    --accent: #315FEA;
+    --accent-dark: #2349C5;
+    --accent-soft: rgba(49, 95, 234, 0.10);
+    --success: #0E9F82;
+    --r-sm: 10px;
+    --r: 14px;
+    --r-lg: 18px;
+    --shadow-sm: 0 2px 8px rgba(24, 42, 76, 0.045);
+    --shadow: 0 12px 30px rgba(24, 42, 76, 0.075);
+}
+
+/* Fondo y área de trabajo */
+[data-testid='stAppViewContainer'],
+[data-testid='stApp'] {
+    background:
+        radial-gradient(ellipse at 8% 0%, rgba(49,95,234,.055), transparent 34%),
+        var(--bg) !important;
+}
+.block-container, [data-testid='stMainBlockContainer'] {
+    max-width: 1450px !important;
+    padding-top: 2rem !important;
+    padding-bottom: 3.5rem !important;
+}
+
+/* Barra superior limpia */
+[data-testid='stHeader'] {
+    background: rgba(243,246,251,.88) !important;
+    backdrop-filter: blur(14px);
+    border-bottom: 1px solid rgba(227,234,244,.8) !important;
+}
+
+/* Navegación lateral: aspecto de panel de control */
+[data-testid='stSidebar'] {
+    background: linear-gradient(180deg, #111D36 0%, #172746 100%) !important;
+    border-right: 1px solid #243656 !important;
+    box-shadow: 8px 0 28px rgba(15,29,54,.08) !important;
+}
+[data-testid='stSidebar'] > div { background: transparent !important; }
+[data-testid='stSidebar'] *,
+[data-testid='stSidebar'] p,
+[data-testid='stSidebar'] label,
+[data-testid='stSidebar'] span {
+    color: #DCE6F7 !important;
+}
+[data-testid='stSidebar'] h1,
+[data-testid='stSidebar'] h2,
+[data-testid='stSidebar'] h3 {
+    color: #FFFFFF !important;
+    -webkit-text-fill-color: #FFFFFF !important;
+}
+[data-testid='stSidebar'] hr {
+    border-color: rgba(220,230,247,.16) !important;
+    background: rgba(220,230,247,.16) !important;
+}
+[data-testid='stSidebar'] [data-testid='stWidgetLabel'] p {
+    color: #AFC0DA !important;
+}
+[data-testid='stSidebar'] [data-baseweb='select'] > div,
+[data-testid='stSidebar'] input {
+    background: #223452 !important;
+    border-color: #344968 !important;
+    color: #FFFFFF !important;
+}
+[data-testid='stSidebar'] [data-baseweb='select'] * {
+    color: #FFFFFF !important;
+}
+[data-testid='stSidebar'] .stRadio [role='radiogroup'] label {
+    background: rgba(255,255,255,.045);
+    border: 1px solid rgba(255,255,255,.055);
+    border-radius: 10px;
+    padding: 8px 11px;
+    margin: 3px 0;
+    transition: background .18s ease, border-color .18s ease;
+}
+[data-testid='stSidebar'] .stRadio [role='radiogroup'] label:hover {
+    background: rgba(255,255,255,.11);
+    border-color: rgba(145,176,255,.35);
+}
+
+/* Jerarquía tipográfica */
+h1 {
+    font-size: clamp(1.8rem, 2.6vw, 2.35rem) !important;
+    letter-spacing: -.035em !important;
+    padding-bottom: .85rem !important;
+    border-bottom: 1px solid var(--border) !important;
+}
+h2 {
+    font-size: 1.32rem !important;
+    letter-spacing: -.025em !important;
+    margin-top: 1.65rem !important;
+}
+h3 {
+    font-size: .98rem !important;
+    border-left: 3px solid #5478F2 !important;
+    padding-left: .75rem !important;
+}
+
+/* Campos y selectores */
+.stTextInput input, .stNumberInput input, .stTextArea textarea,
+[data-testid='stDateInput'] input, [data-testid='stTimeInput'] input,
+[data-baseweb='select'] > div {
+    min-height: 42px;
+    border-radius: 10px !important;
+    border-color: #D5DFEC !important;
+    background: #FFFFFF !important;
+}
+.stTextInput input:focus, .stNumberInput input:focus,
+.stTextArea textarea:focus, [data-testid='stDateInput'] input:focus,
+[data-testid='stTimeInput'] input:focus {
+    border-color: #5478F2 !important;
+    box-shadow: 0 0 0 3px rgba(49,95,234,.12) !important;
+}
+
+/* Botones con relieve sutil */
+.stButton > button, [data-testid='stFormSubmitButton'] > button {
+    min-height: 42px;
+    border-radius: 10px !important;
+    background: linear-gradient(135deg, #3868F0 0%, #2853D8 100%) !important;
+    border: 1px solid #315FEA !important;
+    box-shadow: 0 4px 10px rgba(49,95,234,.16) !important;
+    font-weight: 650 !important;
+}
+.stButton > button:hover, [data-testid='stFormSubmitButton'] > button:hover {
+    background: linear-gradient(135deg, #2F5DE5 0%, #2048C5 100%) !important;
+    box-shadow: 0 7px 16px rgba(49,95,234,.22) !important;
+    transform: translateY(-1px) !important;
+}
+[data-testid='stDownloadButton'] > button {
+    min-height: 42px;
+    border-radius: 10px !important;
+}
+
+/* Métricas y contenedores */
+[data-testid='stMetric'] {
+    border: 1px solid #E3EAF4 !important;
+    border-radius: 16px !important;
+    padding: 1.1rem 1.2rem !important;
+    background: linear-gradient(145deg, #FFFFFF 0%, #FBFCFF 100%) !important;
+    box-shadow: 0 4px 14px rgba(24,42,76,.045) !important;
+}
+[data-testid='stMetric']:hover {
+    border-color: #C9D6F2 !important;
+    box-shadow: 0 10px 24px rgba(24,42,76,.08) !important;
+}
+[data-testid='stMetricLabel'] {
+    font-size: .74rem !important;
+    letter-spacing: .055em !important;
+}
+[data-testid='stMetricValue'] {
+    font-size: clamp(1.55rem, 2.1vw, 2.05rem) !important;
+    letter-spacing: -.04em !important;
+}
+[data-testid='stForm'],
+[data-testid='stExpander'] {
+    border: 1px solid var(--border) !important;
+    border-radius: 15px !important;
+    box-shadow: var(--shadow-sm) !important;
+}
+[data-testid='stForm'] {
+    padding: 1.4rem !important;
+}
+
+/* Gráficos y tablas */
+[data-testid='stPlotlyChart'], [data-testid='stVegaLiteChart'],
+[data-testid='stArrowVegaLiteChart'], [data-testid='stPyplot'],
+[data-testid='stDataFrame'], [data-testid='stTable'] {
+    border: 1px solid var(--border) !important;
+    border-radius: 15px !important;
+    box-shadow: var(--shadow-sm) !important;
+    background: #FFFFFF !important;
+}
+[data-testid='stDataFrame'] {
+    padding: 3px !important;
+}
+
+/* Pestañas */
+.stTabs [data-baseweb='tab-list'] {
+    border-radius: 12px !important;
+    padding: 5px !important;
+    background: #EAF0F9 !important;
+}
+.stTabs [data-baseweb='tab'] {
+    border-radius: 9px !important;
+    padding: .5rem 1rem !important;
+}
+.stTabs [aria-selected='true'] {
+    background: #FFFFFF !important;
+    color: #244CCB !important;
+    box-shadow: 0 2px 7px rgba(24,42,76,.08) !important;
+}
+
+/* Alertas y detalles */
+[data-testid='stAlert'] {
+    border-radius: 12px !important;
+}
+[data-testid='stExpander'] details summary {
+    padding: .45rem .15rem !important;
+}
+::-webkit-scrollbar-thumb {
+    background: #BFCBE0 !important;
+    border: 2px solid var(--bg) !important;
+}
+
+/* Adaptación a pantallas pequeñas */
+@media (max-width: 768px) {
+    .block-container, [data-testid='stMainBlockContainer'] {
+        padding: 1.15rem .85rem 2.5rem !important;
+    }
+    [data-testid='stMetric'] {
+        padding: .85rem !important;
+    }
+    h1 {
+        font-size: 1.65rem !important;
+    }
+}
+
 </style>
 """, unsafe_allow_html=True)
 
