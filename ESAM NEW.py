@@ -976,6 +976,61 @@ hr {
     border: 2px solid #080B12 !important;
 }
 
+
+
+/* Marcadores: ajustar etiquetas, cifras y variaciones al ancho de cada tarjeta */
+div[data-testid="stMetric"] {
+    min-width: 0 !important;
+    max-width: 100% !important;
+    overflow: hidden !important;
+}
+div[data-testid="stMetricLabel"] {
+    min-width: 0 !important;
+    font-size: clamp(0.60rem, 0.78vw, 0.74rem) !important;
+    line-height: 1.18 !important;
+    white-space: normal !important;
+    overflow-wrap: anywhere !important;
+}
+div[data-testid="stMetricValue"] {
+    min-width: 0 !important;
+    max-width: 100% !important;
+    font-size: clamp(0.78rem, 1.05vw, 1.02rem) !important;
+    line-height: 1.10 !important;
+    letter-spacing: -0.04em !important;
+    white-space: normal !important;
+    overflow-wrap: anywhere !important;
+    word-break: break-word !important;
+}
+div[data-testid="stMetricValue"] > div {
+    min-width: 0 !important;
+    max-width: 100% !important;
+    font-size: inherit !important;
+    line-height: inherit !important;
+    white-space: inherit !important;
+    overflow-wrap: inherit !important;
+    word-break: inherit !important;
+}
+div[data-testid="stMetricDelta"] {
+    min-width: 0 !important;
+    font-size: clamp(0.56rem, 0.70vw, 0.66rem) !important;
+    line-height: 1.12 !important;
+    white-space: normal !important;
+    overflow-wrap: anywhere !important;
+}
+div[data-testid="stMetricDelta"] svg {
+    width: 0.65rem !important;
+    height: 0.65rem !important;
+}
+@media (max-width: 900px) {
+    div[data-testid="stMetricValue"] { font-size: 0.86rem !important; }
+}
+@media (max-width: 640px) {
+    div[data-testid="stMetric"] { padding: 0.52rem !important; }
+    div[data-testid="stMetricLabel"],
+    div[data-testid="stMetricDelta"] { font-size: 0.58rem !important; }
+    div[data-testid="stMetricValue"] { font-size: 0.78rem !important; }
+}
+
 </style>
 """, unsafe_allow_html=True)
 
