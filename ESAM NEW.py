@@ -1301,7 +1301,129 @@ label, [data-testid="stWidgetLabel"], .stMarkdown p, .stMarkdown li { color:#D9E
   .login-brand-subtitle { font-size:.58rem;letter-spacing:.1em; }
 }
 
+
+/* ================= PALETA OSCURA CORPORATIVA + AJUSTE DEL ENCABEZADO ================= */
+:root {
+  --bg: #090A0F;
+  --surface: #12141C;
+  --surface-2: #171A24;
+  --border: #262A36;
+  --border-strong: #343A49;
+  --text: #F3F4F6;
+  --text-soft: #D1D5DB;
+  --muted: #9CA3AF;
+  --accent: #3B82F6;
+  --accent-dark: #2563EB;
+  --accent-soft: rgba(59,130,246,.14);
+  --success: #10B981;
+}
+
+/* Fondo y superficies: sin degradados eléctricos ni azules saturados */
+html, body, [data-testid="stApp"], [data-testid="stAppViewContainer"],
+[data-testid="stMain"], [data-testid="stMainBlockContainer"] {
+  background: #090A0F !important;
+  color: #F3F4F6 !important;
+}
+[data-testid="stAppViewContainer"] {
+  background: #090A0F !important;
+}
+[data-testid="stHeader"] {
+  background: rgba(9,10,15,.98) !important;
+  border-bottom: 1px solid #262A36 !important;
+}
+[data-testid="stSidebar"] {
+  background: #10121A !important;
+  border-right: 1px solid #262A36 !important;
+}
+[data-testid="stSidebar"] * { color: #F3F4F6 !important; }
+
+/* Contenedores, métricas y tablas */
+[data-testid="stMetric"], [data-testid="stVerticalBlockBorderWrapper"],
+[data-testid="stExpander"], [data-testid="stDataFrame"],
+[data-testid="stTable"] {
+  background: #12141C !important;
+  border-color: #262A36 !important;
+}
+[data-testid="stMetric"] {
+  border: 1px solid #262A36 !important;
+  border-radius: 12px !important;
+  box-shadow: none !important;
+}
+[data-testid="stMetricLabel"] { color: #9CA3AF !important; }
+[data-testid="stMetricValue"] {
+  color: #F3F4F6 !important;
+  -webkit-text-fill-color: #F3F4F6 !important;
+}
+
+/* Texto y controles */
+h1, h2, h3, h4, p, label, [data-testid="stWidgetLabel"],
+[data-testid="stMarkdownContainer"] li {
+  color: #F3F4F6 !important;
+}
+[data-testid="stCaptionContainer"], small {
+  color: #9CA3AF !important;
+}
+input, textarea, [data-baseweb="select"] > div {
+  background: #12141C !important;
+  color: #F3F4F6 !important;
+  border-color: #262A36 !important;
+}
+.stButton > button, .stFormSubmitButton > button,
+button[kind="primary"] {
+  background: #3B82F6 !important;
+  color: #FFFFFF !important;
+  border: 1px solid #3B82F6 !important;
+  border-radius: 9px !important;
+  box-shadow: none !important;
+  font-weight: 700 !important;
+}
+.stButton > button:hover, .stFormSubmitButton > button:hover {
+  background: #2563EB !important;
+  border-color: #2563EB !important;
+}
+[data-testid="stTabs"] [role="tab"] { color: #9CA3AF !important; }
+[data-testid="stTabs"] [role="tab"][aria-selected="true"] {
+  color: #F3F4F6 !important;
+  border-bottom-color: #3B82F6 !important;
+}
+
+/* Corrección: el título del Panel General no debe recortarse arriba ni a los lados */
+.block-container, [data-testid="stMainBlockContainer"] {
+  padding-top: 2.1rem !important;
+  overflow: visible !important;
+}
+[data-testid="stMainBlockContainer"] [data-testid="stVerticalBlock"],
+[data-testid="stMainBlockContainer"] [data-testid="stElementContainer"],
+[data-testid="stMainBlockContainer"] [data-testid="stMarkdown"] {
+  overflow: visible !important;
+}
+h1, [data-testid="stMarkdownContainer"] h1 {
+  display: block !important;
+  width: 100% !important;
+  max-width: 100% !important;
+  height: auto !important;
+  min-height: 0 !important;
+  overflow: visible !important;
+  white-space: normal !important;
+  overflow-wrap: anywhere !important;
+  word-break: normal !important;
+  font-size: clamp(1.35rem, 2.1vw, 1.85rem) !important;
+  line-height: 1.42 !important;
+  letter-spacing: -0.018em !important;
+  padding: .15rem 0 .8rem !important;
+  margin: .2rem 0 1.1rem !important;
+  color: #F3F4F6 !important;
+  border-bottom: 1px solid #262A36 !important;
+}
+@media (max-width: 700px) {
+  h1, [data-testid="stMarkdownContainer"] h1 {
+    font-size: 1.28rem !important;
+    line-height: 1.4 !important;
+  }
+}
+
 </style>
+
 """, unsafe_allow_html=True)
 
 
