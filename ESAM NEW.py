@@ -1174,6 +1174,133 @@ div[data-testid="stMetricDelta"] {
     div[data-testid="stMetricValue"] { font-size: 1rem !important; }
 }
 
+
+/* =========================================================
+   REDISEÑO FINAL — COLORES VIVOS + ACCESO CENTRADO
+   Solo presentación; conserva intacta la lógica del programa.
+   ========================================================= */
+:root {
+  --bg: #090F1F;
+  --surface: #121D35;
+  --surface-2: #1A2A49;
+  --border: #2A416C;
+  --border-strong: #4266A5;
+  --text: #F5F8FF;
+  --text-soft: #D5E2FA;
+  --muted: #9DB2D8;
+  --accent: #00D4FF;
+  --accent-dark: #087DFF;
+  --accent-soft: rgba(0,212,255,.18);
+  --success: #35E6A2;
+}
+html, body, [data-testid="stApp"], [data-testid="stAppViewContainer"],
+[data-testid="stMain"], [data-testid="stMainBlockContainer"] {
+  background: #090F1F !important;
+  color: #F5F8FF !important;
+}
+[data-testid="stAppViewContainer"] {
+  background:
+    radial-gradient(ellipse at 12% 0%, rgba(0,212,255,.20), transparent 34%),
+    radial-gradient(ellipse at 92% 18%, rgba(126,87,255,.20), transparent 32%),
+    linear-gradient(145deg,#080D1B 0%,#0D1830 55%,#10152B 100%) !important;
+}
+[data-testid="stHeader"] { background: rgba(8,13,27,.92) !important; }
+.block-container, [data-testid="stMainBlockContainer"] {
+  max-width: 1480px !important;
+  padding-top: 1.35rem !important;
+}
+[data-testid="stSidebar"] {
+  background: linear-gradient(180deg,#101D3B 0%,#172B55 52%,#241B50 100%) !important;
+  border-right: 1px solid rgba(0,212,255,.28) !important;
+}
+[data-testid="stSidebar"] * { color: #EAF4FF !important; }
+[data-testid="stSidebar"] h2 { color:#FFFFFF !important; }
+/* Acciones con colores eléctricos */
+.stButton > button, .stFormSubmitButton > button, button[kind="primary"] {
+  background: linear-gradient(105deg,#087DFF 0%,#00BDEB 52%,#7657FF 100%) !important;
+  color:#FFFFFF !important; border:0 !important; border-radius:12px !important;
+  font-weight:800 !important; box-shadow:0 7px 22px rgba(0,160,255,.27) !important;
+  transition:transform .15s ease, filter .15s ease !important;
+}
+.stButton > button:hover, .stFormSubmitButton > button:hover {
+  filter:brightness(1.15) saturate(1.2) !important; transform:translateY(-1px) !important;
+}
+[data-testid="stMetric"] {
+  background:linear-gradient(145deg,#172B50 0%,#14213D 55%,#211C4C 100%) !important;
+  border:1px solid rgba(0,212,255,.38) !important;
+  border-radius:16px !important; box-shadow:0 9px 26px rgba(0,0,0,.22), inset 0 1px 0 rgba(255,255,255,.06) !important;
+}
+[data-testid="stMetricLabel"] { color:#A9DFFF !important; }
+[data-testid="stMetricValue"] { color:#FFFFFF !important; -webkit-text-fill-color:#FFFFFF !important; }
+[data-testid="stTabs"] [role="tab"] { color:#C7D8F4 !important; }
+[data-testid="stTabs"] [role="tab"][aria-selected="true"] {
+  color:#FFFFFF !important; border-bottom-color:#00D4FF !important;
+}
+input, textarea, [data-baseweb="select"] > div {
+  background:#101D36 !important; color:#FFFFFF !important;
+  border-color:#36588C !important; border-radius:10px !important;
+}
+label, [data-testid="stWidgetLabel"], .stMarkdown p, .stMarkdown li { color:#D9E6FA !important; }
+/* Pantalla de acceso: ancho limitado, centrada y con marca siempre visible */
+[data-testid="stMainBlockContainer"]:has(.login-brand) {
+  max-width:760px !important; width:calc(100% - 2rem) !important;
+  margin:0 auto !important; padding:2.1rem 1.25rem 2.8rem !important;
+}
+.login-brand { text-align:center; margin:0 auto 1.15rem; padding:.25rem .5rem .2rem; }
+.login-brand-icon {
+  width:54px;height:54px;margin:0 auto .7rem;border-radius:16px;
+  display:flex;align-items:center;justify-content:center;
+  color:#061326;font-size:1rem;font-weight:1000;letter-spacing:-.06em;
+  background:linear-gradient(135deg,#00E5FF,#5B7CFF 58%,#A36BFF);
+  box-shadow:0 8px 28px rgba(0,190,255,.3);
+}
+.login-brand-name {
+  color:#FFFFFF !important; font-size:clamp(1.55rem,4vw,2.25rem);
+  line-height:1.1;font-weight:900;letter-spacing:.025em;
+  text-shadow:0 3px 24px rgba(0,190,255,.2);
+}
+.login-brand-name span { color:#00D9FF !important; }
+.login-brand-subtitle {
+  margin-top:.55rem;color:#AFC6E9 !important;font-size:.68rem;
+  font-weight:800;letter-spacing:.16em;line-height:1.5;
+}
+.login-brand-line {
+  width:94px;height:3px;margin:1rem auto 0;border-radius:4px;
+  background:linear-gradient(90deg,#087DFF,#00E5FF,#946BFF);
+}
+[data-testid="stMainBlockContainer"]:has(.login-brand) [data-testid="stTabs"] {
+  background:linear-gradient(145deg,rgba(24,43,77,.98),rgba(20,29,57,.98)) !important;
+  border:1px solid rgba(0,212,255,.28) !important;border-radius:20px !important;
+  padding:1.15rem 1.4rem 1.4rem !important;
+  box-shadow:0 18px 48px rgba(0,0,0,.32),inset 0 1px 0 rgba(255,255,255,.06) !important;
+}
+[data-testid="stMainBlockContainer"]:has(.login-brand) [data-testid="stTabs"] [role="tablist"] {
+  justify-content:center;gap:.6rem;border-bottom:1px solid #2A416C !important;
+}
+[data-testid="stMainBlockContainer"]:has(.login-brand) [data-testid="stTabs"] [role="tab"] {
+  padding:.65rem 1rem !important;font-weight:800 !important;
+}
+[data-testid="stMainBlockContainer"]:has(.login-brand) h2,
+[data-testid="stMainBlockContainer"]:has(.login-brand) h3 {
+  color:#FFFFFF !important;text-align:center !important;font-size:1.12rem !important;
+  margin:.8rem 0 1rem !important;
+}
+[data-testid="stMainBlockContainer"]:has(.login-brand) [data-testid="stForm"] {
+  border:0 !important;background:transparent !important;padding:.15rem .15rem .2rem !important;
+}
+[data-testid="stMainBlockContainer"]:has(.login-brand) .stFormSubmitButton > button {
+  min-height:2.85rem !important;margin-top:.55rem !important;
+}
+@media(max-width:640px) {
+  [data-testid="stMainBlockContainer"]:has(.login-brand) {
+    width:100% !important;padding:1.1rem .65rem 1.5rem !important;
+  }
+  [data-testid="stMainBlockContainer"]:has(.login-brand) [data-testid="stTabs"] {
+    padding:.8rem .65rem 1rem !important;
+  }
+  .login-brand-subtitle { font-size:.58rem;letter-spacing:.1em; }
+}
+
 </style>
 """, unsafe_allow_html=True)
 
@@ -1777,10 +1904,16 @@ if "user_info" not in st.session_state:
     st.session_state.user_info = None
 
 if not st.session_state.authenticated:
-    st.markdown("<h1 style='text-align: center; color: #0F172A;'>💻 ESAM ANALYTICS 360°</h1>", unsafe_allow_html=True)
-    st.markdown("<p style='text-align: center; color: #64748B;'>Plataforma Profesional de Estadísticas y Control Operativo</p>", unsafe_allow_html=True)
+    st.markdown("""
+        <div class="login-brand">
+            <div class="login-brand-icon">ESAM</div>
+            <div class="login-brand-name">ESAM ANALYTICS <span>360°</span></div>
+            <div class="login-brand-subtitle">CENTRO DE CONTROL · ESTADÍSTICAS Y OPERACIONES</div>
+            <div class="login-brand-line"></div>
+        </div>
+    """, unsafe_allow_html=True)
 
-    tab_login, tab_registro = st.tabs(["🔑 Iniciar Sesión", "📝 Registrar Usuario"])
+    tab_login, tab_registro = st.tabs(["🔐  Iniciar sesión", "＋  Crear cuenta"])
 
     with tab_login:
         st.subheader("Ingreso de Operadores")
