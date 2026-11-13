@@ -1031,6 +1031,149 @@ div[data-testid="stMetricDelta"] svg {
     div[data-testid="stMetricValue"] { font-size: 0.78rem !important; }
 }
 
+
+/* =========================================================
+   AJUSTES SOLICITADOS: COLORES, ACCESO Y MARCADORES
+   ========================================================= */
+
+/* Paleta más viva sin alterar la estructura de los módulos */
+:root {
+    --accent: #397BFF;
+    --accent-dark: #245CEB;
+    --accent-soft: rgba(57, 123, 255, .20);
+    --success: #16C784;
+}
+[data-testid='stAppViewContainer'] {
+    background:
+      radial-gradient(ellipse at 8% 0%, rgba(42,111,255,.20), transparent 35%),
+      radial-gradient(ellipse at 95% 12%, rgba(0,204,170,.09), transparent 30%),
+      #080B12 !important;
+}
+[data-testid='stSidebar'] {
+    background: linear-gradient(180deg, #09152B 0%, #10264A 55%, #101B32 100%) !important;
+    border-right: 1px solid #294878 !important;
+}
+.stButton > button, [data-testid='stFormSubmitButton'] > button {
+    background: linear-gradient(135deg, #4387FF 0%, #2458F0 100%) !important;
+    border: 1px solid #5793FF !important;
+    box-shadow: 0 5px 16px rgba(37,99,235,.30) !important;
+}
+.stButton > button:hover, [data-testid='stFormSubmitButton'] > button:hover {
+    background: linear-gradient(135deg, #5A98FF 0%, #3269FF 100%) !important;
+    box-shadow: 0 7px 20px rgba(37,99,235,.42) !important;
+}
+
+/* Inicio: panel compacto, centrado y con jerarquía visual */
+[data-testid='stMainBlockContainer']:has(h1[style*='text-align: center']) {
+    max-width: 560px !important;
+    padding-top: 2.0rem !important;
+    padding-bottom: 2rem !important;
+}
+[data-testid='stMainBlockContainer']:has(h1[style*='text-align: center']) h1 {
+    font-size: clamp(1.65rem, 3vw, 2.15rem) !important;
+    line-height: 1.12 !important;
+    margin-bottom: .35rem !important;
+    background: linear-gradient(90deg, #FFFFFF 0%, #9FC4FF 55%, #54E4D0 100%);
+    -webkit-background-clip: text;
+    background-clip: text;
+    -webkit-text-fill-color: transparent !important;
+}
+[data-testid='stMainBlockContainer']:has(h1[style*='text-align: center']) [data-testid='stMarkdownContainer'] p {
+    font-size: .84rem !important;
+    line-height: 1.4 !important;
+    margin-bottom: 1rem !important;
+    color: #AFC3E2 !important;
+}
+[data-testid='stMainBlockContainer']:has(h1[style*='text-align: center']) [data-testid='stTabs'] {
+    max-width: 440px !important;
+    padding: .85rem 1rem 1rem !important;
+    border: 1px solid #30496F !important;
+    border-radius: 17px !important;
+    background: linear-gradient(145deg, #17243A 0%, #101A2B 100%) !important;
+    box-shadow: 0 18px 48px rgba(0,0,0,.38), 0 0 0 1px rgba(74,132,255,.08) !important;
+}
+[data-testid='stMainBlockContainer']:has(h1[style*='text-align: center']) [data-testid='stForm'] {
+    padding: .15rem 0 0 !important;
+}
+[data-testid='stMainBlockContainer']:has(h1[style*='text-align: center']) h3 {
+    font-size: .88rem !important;
+    margin: .1rem 0 .65rem !important;
+    color: #C5D7F2 !important;
+}
+[data-testid='stMainBlockContainer']:has(h1[style*='text-align: center']) .stTextInput input {
+    min-height: 40px !important;
+    background: #0D1728 !important;
+    border: 1px solid #385477 !important;
+    border-radius: 9px !important;
+}
+[data-testid='stMainBlockContainer']:has(h1[style*='text-align: center']) .stButton > button,
+[data-testid='stMainBlockContainer']:has(h1[style*='text-align: center']) [data-testid='stFormSubmitButton'] > button {
+    min-height: 40px !important;
+    margin-top: .35rem !important;
+    font-size: .9rem !important;
+    border-radius: 9px !important;
+}
+[data-testid='stMainBlockContainer']:has(h1[style*='text-align: center']) .stTabs [data-baseweb='tab-list'] {
+    margin-bottom: .55rem !important;
+}
+
+/* Marcadores: cifras mayores, legibles y contenidas en cada tarjeta */
+div[data-testid="stMetric"] {
+    min-width: 0 !important;
+    max-width: 100% !important;
+    overflow: hidden !important;
+    padding: .9rem .95rem !important;
+    border: 1px solid #304767 !important;
+    background: linear-gradient(145deg, #18263B 0%, #111B2B 100%) !important;
+}
+div[data-testid="stMetricLabel"] {
+    font-size: clamp(.68rem, .85vw, .80rem) !important;
+    line-height: 1.2 !important;
+    color: #AFC5E8 !important;
+    white-space: normal !important;
+    overflow-wrap: anywhere !important;
+}
+div[data-testid="stMetricValue"] {
+    min-width: 0 !important;
+    max-width: 100% !important;
+    font-size: clamp(1.05rem, 1.55vw, 1.48rem) !important;
+    font-weight: 800 !important;
+    line-height: 1.14 !important;
+    letter-spacing: -.035em !important;
+    color: #FFFFFF !important;
+    -webkit-text-fill-color: #FFFFFF !important;
+    white-space: normal !important;
+    overflow-wrap: anywhere !important;
+    word-break: break-word !important;
+}
+div[data-testid="stMetricValue"] > div,
+div[data-testid="stMetricValue"] [data-testid="stMarkdownContainer"] {
+    min-width: 0 !important;
+    max-width: 100% !important;
+    font-size: inherit !important;
+    line-height: inherit !important;
+    overflow-wrap: anywhere !important;
+    word-break: break-word !important;
+}
+div[data-testid="stMetricDelta"] {
+    font-size: clamp(.62rem, .75vw, .72rem) !important;
+    line-height: 1.15 !important;
+    overflow-wrap: anywhere !important;
+}
+@media (max-width: 1100px) {
+    div[data-testid="stMetricValue"] { font-size: clamp(.98rem, 1.7vw, 1.25rem) !important; }
+}
+@media (max-width: 640px) {
+    [data-testid='stMainBlockContainer']:has(h1[style*='text-align: center']) {
+        padding: 1.2rem .75rem 1.5rem !important;
+    }
+    [data-testid='stMainBlockContainer']:has(h1[style*='text-align: center']) [data-testid='stTabs'] {
+        padding: .7rem .75rem .85rem !important;
+    }
+    div[data-testid="stMetric"] { padding: .65rem !important; }
+    div[data-testid="stMetricValue"] { font-size: 1rem !important; }
+}
+
 </style>
 """, unsafe_allow_html=True)
 
@@ -1992,19 +2135,40 @@ else:
             conn_det = get_db_connection()
             if conn_det:
                 try:
+                    # Cada tabla se resume por operador ANTES de unirla.
+                    # Así se evita que varios partidos x varios lotes de picheos
+                    # multipliquen artificialmente las sumas.
                     df_det = pd.read_sql_query("""
-                        SELECT 
+                        WITH basket_por_usuario AS (
+                            SELECT
+                                usuario_id,
+                                COUNT(*) AS partidos_basket,
+                                COALESCE(SUM(tarifa), 0.00) AS usd_basket
+                            FROM partidos
+                            WHERE fecha BETWEEN %s AND %s
+                            GROUP BY usuario_id
+                        ),
+                        beisbol_por_usuario AS (
+                            SELECT
+                                usuario_id,
+                                COALESCE(SUM(cantidad), 0) AS total_picheos
+                            FROM picheos
+                            WHERE fecha BETWEEN %s AND %s
+                            GROUP BY usuario_id
+                        )
+                        SELECT
                             u.id AS "ID",
                             u.username AS "Usuario",
                             u.nombre AS "Nombre Completo",
-                            COUNT(DISTINCT p.id) AS "Partidos Basket",
-                            COALESCE(SUM(p.tarifa), 0.00) AS "USD Basket",
-                            COALESCE(SUM(pi.cantidad), 0) AS "Total Picheos",
-                            (COALESCE(SUM(pi.cantidad), 0) * (SELECT valor FROM configuracion_global WHERE clave='precio_beisbol')) AS "USD Béisbol"
+                            COALESCE(b.partidos_basket, 0) AS "Partidos Basket",
+                            COALESCE(b.usd_basket, 0.00) AS "USD Basket",
+                            COALESCE(pi.total_picheos, 0) AS "Total Picheos",
+                            COALESCE(pi.total_picheos, 0) *
+                                COALESCE((SELECT valor FROM configuracion_global
+                                          WHERE clave = 'precio_beisbol'), 0) AS "USD Béisbol"
                         FROM usuarios u
-                        LEFT JOIN partidos p ON u.id = p.usuario_id AND p.fecha BETWEEN %s AND %s
-                        LEFT JOIN picheos pi ON u.id = pi.usuario_id AND pi.fecha BETWEEN %s AND %s
-                        GROUP BY u.id, u.username, u.nombre
+                        LEFT JOIN basket_por_usuario b ON b.usuario_id = u.id
+                        LEFT JOIN beisbol_por_usuario pi ON pi.usuario_id = u.id
                         ORDER BY u.id ASC;
                     """, conn_det, params=(f_ini, f_fin, f_ini, f_fin))
                     df_tiempos_det = pd.read_sql_query("""
